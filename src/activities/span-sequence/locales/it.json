@@ -1,0 +1,11 @@
+{
+  "name": "Sequenze da ricordare",
+  "description": "Osserva una sequenza di riquadri (o di cifre) e ripetila nello stesso ordine o al contrario. Allena la memoria di lavoro; la lunghezza si adatta automaticamente.",
+  "instructions": "Alcuni riquadri si illumineranno uno dopo l'altro. Guarda con attenzione.\nPoi tocca i riquadri nello stesso ordine.\nSe va bene, la sequenza successiva sarà un po' più lunga.",
+  "instructionsKids": "Le stelline si accendono una dopo l'altra! ⭐\nGuarda bene e poi tocca le caselle nello stesso ordine.",
+  "watch": "Guarda…",
+  "repeat": "Ora ripeti nello stesso ordine",
+  "repeatBackward": "Ora ripeti al CONTRARIO (dall'ultimo al primo)",
+  "right": "Esatto!",
+  "wrong": "Non era questa, proviamo la prossima"
+}

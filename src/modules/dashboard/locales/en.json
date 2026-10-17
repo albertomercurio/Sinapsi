@@ -1,0 +1,17 @@
+{
+  "title": "Today",
+  "morning": "Good morning",
+  "afternoon": "Good afternoon",
+  "evening": "Good evening",
+  "today": "Today's sessions",
+  "doneToday": "{n} already completed",
+  "noToday": "No sessions planned for today.",
+  "nextDays": "Coming days",
+  "activePatients": "Active patients",
+  "weekSessions": "Sessions in the next 7 days",
+  "exploreActivities": "Explore activities",
+  "exploreHint": "Try the exercises or print a worksheet",
+  "backupTitle": "Time for a backup",
+  "backupText": "The free plan has no automatic backups: download an encrypted copy of the data at least once a week.",
+  "backupNow": "Back up now"
+}

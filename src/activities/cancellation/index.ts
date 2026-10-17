@@ -1,0 +1,35 @@
+import { defineActivity } from '@/modules/activities/types'
+import { configFor, configSchema, generate, score, type Config, type Instance } from './logic'
+
+export default defineActivity<Config, Instance>({
+  id: 'cancellation',
+  version: 1,
+  scoringVersion: 2,
+  icon: '🔎',
+  domains: ['attention.selective', 'visuospatial', 'speed'],
+  ageGroups: ['child', 'adult', 'senior'],
+  formats: ['digital', 'paper'],
+  languageDependent: false,
+  minTrials: 1,
+  estimatedMinutes: 3,
+  configSchema,
+  configFor,
+  generate: ({ rng, config, ageGroup }) => generate(rng, config, ageGroup),
+  score: (instance, rec, { config }) => score(instance, rec, config),
+  metrics: [
+    { key: 'hitRate', unit: 'percent', polarity: 1, primary: true },
+    { key: 'cancellationsPerMin', unit: 'perMin', polarity: 1, primary: true },
+    { key: 'cocX', unit: 'index', polarity: 0, primary: true },
+    { key: 'commissions', unit: 'count', polarity: -1 },
+    { key: 'bestR', unit: 'index', polarity: 1 },
+    { key: 'intersectionRate', unit: 'ratio', polarity: -1 },
+    { key: 'meanDistance', unit: 'ratio', polarity: -1 },
+    { key: 'cocY', unit: 'index', polarity: 0 },
+    { key: 'leftOmissions', unit: 'count', polarity: -1 },
+    { key: 'rightOmissions', unit: 'count', polarity: -1 },
+    { key: 'durationS', unit: 'seconds', polarity: -1 },
+    { key: 'holdMedian', unit: 'ms', polarity: 0 },
+  ],
+  player: () => import('./Player.vue'),
+  print: () => import('./Print.vue'),
+})

@@ -1,0 +1,76 @@
+{
+  "title": "Attività",
+  "subtitle": "Esercizi generati automaticamente: ogni volta una variante nuova, alla difficoltà giusta per il paziente.",
+  "try": "Prova",
+  "tryAgain": "Prova di nuovo",
+  "printSheet": "Scheda cartacea",
+  "noMatch": "Nessuna attività corrisponde ai filtri.",
+  "allDomains": "Tutte le aree",
+  "allAges": "Tutte le età",
+  "allFormats": "Tutti i formati",
+  "fixed": "Fissa",
+  "ageGroup": "Fascia d'età",
+  "groups": {
+    "orientation": "Orientamento",
+    "attention": "Attenzione",
+    "memory": "Memoria",
+    "executive": "Funzioni esecutive",
+    "language": "Linguaggio",
+    "praxis": "Prassie",
+    "gnosis": "Gnosie",
+    "visuospatial": "Abilità visuospaziali",
+    "speed": "Velocità di elaborazione",
+    "calculation": "Calcolo",
+    "social": "Cognizione sociale",
+    "adl": "Attività della vita quotidiana"
+  },
+  "domains": {
+    "orientation": "Orientamento",
+    "attention": {
+      "sustained": "Attenzione sostenuta",
+      "selective": "Attenzione selettiva",
+      "alternating": "Attenzione alternata",
+      "divided": "Attenzione divisa"
+    },
+    "memory": {
+      "working": "Memoria di lavoro",
+      "episodic": "Memoria episodica",
+      "semantic": "Memoria semantica",
+      "visual": "Memoria visiva",
+      "verbal": "Memoria verbale"
+    },
+    "executive": {
+      "planning": "Pianificazione",
+      "inhibition": "Inibizione",
+      "flexibility": "Flessibilità cognitiva",
+      "reasoning": "Ragionamento"
+    },
+    "language": "Linguaggio",
+    "praxis": "Prassie",
+    "gnosis": "Gnosie",
+    "visuospatial": "Abilità visuospaziali",
+    "speed": "Velocità di elaborazione",
+    "calculation": "Calcolo",
+    "social": "Cognizione sociale",
+    "adl": "Vita quotidiana"
+  },
+  "runtime": {
+    "baselineInstructions": "Riscaldamento: tocca il cerchio verde appena compare.",
+    "pause": "Pausa",
+    "resume": "Riprendi",
+    "listen": "Ascolta",
+    "start": "Inizia",
+    "paused": "In pausa",
+    "continue": "Continua",
+    "praise1": "Hai finito, bravo!",
+    "praise2": "Molto bene!",
+    "praise3": "Eccellente!"
+  },
+  "tryNotice": "Modalità di prova: i risultati non vengono salvati. Utile per conoscere l'esercizio o mostrarlo al paziente.",
+  "tryResults": "Risultati della prova",
+  "tryResultsHelp": "Queste sono le misure che vengono salvate per ogni esecuzione reale.",
+  "printTitle": "Scheda da stampare",
+  "copies": "Copie",
+  "newVariant": "Nuova variante",
+  "printHelp": "Ogni variante è diversa: il paziente non può impararla a memoria. Usa «Stampa» e scegli «Salva come PDF» per conservarla."
+}

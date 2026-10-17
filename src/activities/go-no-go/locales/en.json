@@ -1,0 +1,8 @@
+{
+  "name": "Traffic light (Go/No-Go)",
+  "description": "Press as fast as possible for the \"go\" stimulus and hold back for the \"stop\" one. Trains inhibition, sustained attention and speed.",
+  "instructions": "Shapes will appear in the middle of the screen.\nWhen you see the green circle 🟢 press the button as fast as you can.\nWhen you see the red square 🟥 do NOT press.\nYou can also use the space bar.",
+  "instructionsKids": "You are a fisher! When you see the little fish 🐟 press the button straight away.\nWatch out for the shark 🦈: when it comes, do NOT press!",
+  "reminder": "Press for {go} · Don't press for {nogo}",
+  "press": "Press"
+}

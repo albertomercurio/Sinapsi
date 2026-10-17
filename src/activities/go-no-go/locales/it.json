@@ -1,0 +1,8 @@
+{
+  "name": "Semaforo (Go/No-Go)",
+  "description": "Premi il più velocemente possibile per lo stimolo «via», trattieniti per lo stimolo «stop». Allena inibizione, attenzione sostenuta e velocità.",
+  "instructions": "Al centro compariranno delle figure.\nQuando vedi il cerchio verde 🟢 premi il pulsante il più velocemente possibile.\nQuando vedi il quadrato rosso 🟥 NON premere.\nPuoi anche usare la barra spaziatrice.",
+  "instructionsKids": "Sei un pescatore! Quando vedi il pesciolino 🐟 premi subito il pulsante.\nAttenzione allo squalo 🦈: quando arriva, NON premere!",
+  "reminder": "Premi per {go} · Non premere per {nogo}",
+  "press": "Premi"
+}

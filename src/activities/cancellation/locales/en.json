@@ -1,0 +1,11 @@
+{
+  "name": "Symbol hunt",
+  "description": "Find and tap every symbol that matches the model. Trains selective attention and visual exploration of space.",
+  "instructions": "The box contains many symbols.\nTap all the ones that are the SAME as the model shown at the top. If you make a mistake, tap it again to undo.\nWhen you think you have found them all, press \"I'm done\".",
+  "instructionsKids": "Find all the little fish 🐟 hidden in the sea and tap them!\nWhen you have found them all press \"I'm done\".",
+  "find": "Find:",
+  "done": "I'm done",
+  "printInstructions": "Circle every symbol that matches the model. Work calmly, without stopping.",
+  "printTime": "Time taken:",
+  "printFound": "Found:"
+}

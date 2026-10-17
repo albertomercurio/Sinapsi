@@ -1,0 +1,126 @@
+{
+  "title": "Patients",
+  "subtitle": "Each patient is identified by a code only: names and personal details stay outside the platform.",
+  "showActive": "Show active",
+  "showArchived": "Show archived",
+  "new": "New patient",
+  "searchCode": "Search by code…",
+  "noArchived": "No archived patients",
+  "empty": "No patients yet",
+  "emptyHint": "Create the first patient: they will get an anonymous code to write down in your clinical records.",
+  "code": "Code",
+  "age": "Age",
+  "conditionsTitle": "Conditions",
+  "lastSession": "Last session",
+  "nextSession": "Next session",
+  "patient": "Patient",
+  "ageYears": "{n} years old",
+  "educationShort": "{n} years of schooling",
+  "sexF": "Female",
+  "sexM": "Male",
+  "sexX": "Unspecified / other",
+  "hand": {
+    "right": "Right-handed",
+    "left": "Left-handed",
+    "ambi": "Ambidextrous"
+  },
+  "archivedBadge": "Archived",
+  "tabs": {
+    "overview": "Overview",
+    "sessions": "Sessions",
+    "results": "Progress",
+    "profile": "Clinical profile",
+    "privacy": "Privacy"
+  },
+  "conditionsHelp": "Diagnostic categories, used only to organize the work.",
+  "notes": "Notes",
+  "createdOn": "Created on {date}",
+  "privacy": {
+    "exportTitle": "Export data",
+    "exportHelp": "Download everything recorded about this patient as JSON (right of access and portability).",
+    "export": "Download JSON",
+    "restoreTitle": "Restore",
+    "archiveTitle": "Archive",
+    "archiveHelp": "An archived patient no longer appears in the list, but their data is kept.",
+    "restore": "Restore",
+    "archive": "Archive",
+    "deleteTitle": "Delete permanently",
+    "deleteHelp": "Erases the patient and all their results (right to erasure). This cannot be undone.",
+    "delete": "Delete",
+    "ownerOnly": "Only the practice owner can delete a patient.",
+    "deleteConfirmTitle": "Delete {code}?",
+    "deleteConfirmText": "Profile, sessions, results and raw recordings will be erased forever. The activity log will only keep a record of the deletion."
+  },
+  "archived": "Patient archived",
+  "restored": "Patient restored",
+  "deleted": "Patient {code} deleted",
+  "unspecified": "Not specified",
+  "form": {
+    "demographics": "Essential data",
+    "player": "Exercises"
+  },
+  "birthYear": "Year of birth",
+  "sex": "Sex",
+  "educationYears": "Years of schooling",
+  "handedness": "Handedness",
+  "contentLocale": "Exercise language",
+  "prefs": {
+    "theme": "Look",
+    "themeStandard": "Standard",
+    "themeKids": "Children",
+    "fontScale": "Text size",
+    "fontNormal": "Normal",
+    "fontLarge": "Large",
+    "fontXL": "Extra large",
+    "highContrast": "High contrast",
+    "reducedMotion": "Reduce animations",
+    "audio": "Read instructions aloud"
+  },
+  "targetSuccess": "Expected success in adaptive exercises: {n}%",
+  "targetSuccessShort": "Expected success",
+  "targetSuccessHelp": "Difficulty adjusts automatically so the patient succeeds in about this share of trials. 75% balances challenge and motivation well.",
+  "noIdentifiers": "Do not enter names, surnames, addresses or any other detail that could identify the patient.",
+  "created": "Patient {code} created. Write the code down in your clinical records.",
+  "editTitle": "Edit {code}",
+  "newTitle": "New patient",
+  "formSubtitle": "Only the data needed to choose and adapt exercises.",
+  "pseudonymNotice": "The patient code is generated automatically. Keep the code ↔ name mapping only in your own records, outside Sinapsi.",
+  "conditions": {
+    "neuro": {
+      "stroke": "Stroke",
+      "tbi": "Traumatic brain injury",
+      "tumor": "Brain tumour",
+      "ms": "Multiple sclerosis",
+      "parkinson": "Parkinson's disease",
+      "epilepsy": "Epilepsy",
+      "other": "Other neurological condition"
+    },
+    "dementia": {
+      "mci": "Mild cognitive impairment (MCI)",
+      "alzheimer": "Alzheimer's dementia",
+      "vascular": "Vascular dementia",
+      "ftd": "Frontotemporal dementia",
+      "lewy": "Lewy body dementia"
+    },
+    "dev": {
+      "adhd": "ADHD",
+      "sld": "Specific learning disorder",
+      "dld": "Developmental language disorder",
+      "asd": "Autism spectrum disorder",
+      "id": "Intellectual disability",
+      "dcd": "Developmental coordination disorder"
+    },
+    "psy": {
+      "schizophrenia": "Schizophrenia",
+      "mood": "Mood disorder",
+      "other": "Other psychiatric condition"
+    },
+    "aging": {
+      "healthy": "Healthy ageing"
+    },
+    "other": "Other"
+  },
+  "noConditions": "No conditions recorded.",
+  "onsetYear": "Year of onset",
+  "icd11": "ICD-11 code"
+}

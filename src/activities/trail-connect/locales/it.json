@@ -1,0 +1,14 @@
+{
+  "name": "Collega in ordine",
+  "description": "Collega i cerchi in ordine: prima i numeri (1-2-3…), poi alternando numeri e lettere (1-A-2-B…). Allena velocità, flessibilità e attenzione alternata.",
+  "instructions": "Tocca i cerchi in ordine, il più velocemente possibile senza sbagliare.\nInizia dal cerchio verde «1»: tocca 2, poi 3, poi 4…\nSe tocchi il cerchio sbagliato diventa rosso: cerca quello giusto e continua.",
+  "instructionsKids": "Unisci i puntini in ordine: 1, 2, 3… come in un gioco di enigmistica! ✏️",
+  "hintA": "Tocca i numeri in ordine: 1 → 2 → 3 …",
+  "hintB": "Alterna numeri e lettere: 1 → A → 2 → B → 3 → C …",
+  "partB": "Ottimo! Ora la seconda parte: alterna un numero e una lettera, in ordine.\n1 → A → 2 → B → 3 → C …",
+  "giveUp": "Mi fermo qui",
+  "printA": "Unisci con una linea i cerchi in ordine numerico (1-2-3…), senza staccare la penna.",
+  "printB": "Unisci i cerchi alternando numeri e lettere in ordine (1-A-2-B-3-C…), senza staccare la penna.",
+  "printTime": "Tempo:",
+  "printErrors": "Errori:"
+}

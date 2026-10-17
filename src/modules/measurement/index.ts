@@ -1,0 +1,6 @@
+export * from './types'
+export { TrialRecorder } from './recorder'
+export { movementSummary, normalizedDistance } from './kinematics'
+export { packRecording, unpackRecording, toByteaHex, fromByteaHex, EVENTS_ENCODING } from './encode'
+export { qualityFlags } from './quality'
+export { describeDevice, estimateRefreshRate } from './device'

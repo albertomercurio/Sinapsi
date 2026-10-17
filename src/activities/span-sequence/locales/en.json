@@ -1,0 +1,11 @@
+{
+  "name": "Sequences to remember",
+  "description": "Watch a sequence of squares (or digits) and repeat it in the same order or backwards. Trains working memory; the length adapts automatically.",
+  "instructions": "Some squares will light up one after another. Watch carefully.\nThen tap the squares in the same order.\nIf it goes well, the next sequence will be a little longer.",
+  "instructionsKids": "The little stars light up one after another! ⭐\nWatch carefully, then tap the squares in the same order.",
+  "watch": "Watch…",
+  "repeat": "Now repeat in the same order",
+  "repeatBackward": "Now repeat BACKWARDS (from last to first)",
+  "right": "Correct!",
+  "wrong": "Not quite, let's try the next one"
+}

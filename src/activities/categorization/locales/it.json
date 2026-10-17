@@ -1,0 +1,8 @@
+{
+  "name": "Metti in ordine",
+  "description": "Smista le immagini nella categoria giusta. Ai livelli alti la regola cambia (categoria ↔ grandezza): allena memoria semantica e flessibilità cognitiva.",
+  "instructions": "Comparirà un'immagine con il suo nome.\nTocca la casella giusta in basso, oppure usa i tasti 1, 2, 3, 4.\nSe vedi il cartello in alto, segui la regola indicata: a volte si ordina per CATEGORIA, a volte per GRANDEZZA.",
+  "instructionsKids": "Aiutami a mettere in ordine! Metti ogni immagine nella sua casetta giusta. 🏠",
+  "byCategory": "Ordina per CATEGORIA",
+  "bySize": "Ordina per GRANDEZZA"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Caccia al simbolo",
+  "description": "Trova e tocca tutti i simboli uguali al modello. Allena l'attenzione selettiva e l'esplorazione visiva dello spazio.",
+  "instructions": "Nel riquadro ci sono tanti simboli.\nTocca tutti quelli UGUALI al modello mostrato in alto. Se sbagli, toccalo di nuovo per annullare.\nQuando pensi di averli trovati tutti, premi «Ho finito».",
+  "instructionsKids": "Trova tutti i pesciolini 🐟 nascosti nel mare e toccali!\nQuando li hai trovati tutti premi «Ho finito».",
+  "find": "Trova:",
+  "done": "Ho finito",
+  "printInstructions": "Cerchia con la penna tutti i simboli uguali al modello. Lavora con calma, ma senza fermarti.",
+  "printTime": "Tempo impiegato:",
+  "printFound": "Trovati:"
+}

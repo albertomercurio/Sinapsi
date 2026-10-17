@@ -1,0 +1,126 @@
+{
+  "title": "Pazienti",
+  "subtitle": "Ogni paziente è identificato solo da un codice: nomi e dati anagrafici restano fuori dalla piattaforma.",
+  "showActive": "Mostra attivi",
+  "showArchived": "Mostra archiviati",
+  "new": "Nuovo paziente",
+  "searchCode": "Cerca per codice…",
+  "noArchived": "Nessun paziente archiviato",
+  "empty": "Ancora nessun paziente",
+  "emptyHint": "Crea il primo paziente: riceverà un codice anonimo da annotare nella tua cartella clinica.",
+  "code": "Codice",
+  "age": "Età",
+  "conditionsTitle": "Condizioni",
+  "lastSession": "Ultima seduta",
+  "nextSession": "Prossima seduta",
+  "patient": "Paziente",
+  "ageYears": "{n} anni",
+  "educationShort": "{n} anni di scolarità",
+  "sexF": "Femmina",
+  "sexM": "Maschio",
+  "sexX": "Non specificato / altro",
+  "hand": {
+    "right": "Destrimane",
+    "left": "Mancino",
+    "ambi": "Ambidestro"
+  },
+  "archivedBadge": "Archiviato",
+  "tabs": {
+    "overview": "Panoramica",
+    "sessions": "Sedute",
+    "results": "Andamento",
+    "profile": "Profilo clinico",
+    "privacy": "Privacy"
+  },
+  "conditionsHelp": "Categorie diagnostiche usate solo per organizzare il lavoro.",
+  "notes": "Note",
+  "createdOn": "Creato il {date}",
+  "privacy": {
+    "exportTitle": "Esporta i dati",
+    "exportHelp": "Scarica in formato JSON tutto ciò che è registrato su questo paziente (diritto di accesso e portabilità).",
+    "export": "Scarica JSON",
+    "restoreTitle": "Ripristina",
+    "archiveTitle": "Archivia",
+    "archiveHelp": "Un paziente archiviato non compare più nell'elenco, ma i suoi dati restano conservati.",
+    "restore": "Ripristina",
+    "archive": "Archivia",
+    "deleteTitle": "Elimina definitivamente",
+    "deleteHelp": "Cancella il paziente e tutti i suoi risultati (diritto all'oblio). L'operazione non è reversibile.",
+    "delete": "Elimina",
+    "ownerOnly": "Solo il titolare dello studio può eliminare un paziente.",
+    "deleteConfirmTitle": "Eliminare {code}?",
+    "deleteConfirmText": "Verranno cancellati per sempre profilo, sedute, risultati e registrazioni grezze. Nel registro delle attività resterà solo traccia dell'eliminazione."
+  },
+  "archived": "Paziente archiviato",
+  "restored": "Paziente ripristinato",
+  "deleted": "Paziente {code} eliminato",
+  "unspecified": "Non indicato",
+  "form": {
+    "demographics": "Dati essenziali",
+    "player": "Esercizi"
+  },
+  "birthYear": "Anno di nascita",
+  "sex": "Sesso",
+  "educationYears": "Anni di scolarità",
+  "handedness": "Lateralità",
+  "contentLocale": "Lingua degli esercizi",
+  "prefs": {
+    "theme": "Aspetto",
+    "themeStandard": "Standard",
+    "themeKids": "Bambini",
+    "fontScale": "Dimensione del testo",
+    "fontNormal": "Normale",
+    "fontLarge": "Grande",
+    "fontXL": "Molto grande",
+    "highContrast": "Contrasto elevato",
+    "reducedMotion": "Riduci le animazioni",
+    "audio": "Leggi le istruzioni ad alta voce"
+  },
+  "targetSuccess": "Successo atteso negli esercizi adattivi: {n}%",
+  "targetSuccessShort": "Successo atteso",
+  "targetSuccessHelp": "La difficoltà si regola automaticamente perché il paziente riesca in circa questa percentuale di prove. 75% è un buon equilibrio tra sfida e motivazione.",
+  "noIdentifiers": "Non inserire nomi, cognomi, indirizzi o altri dati che permettano di identificare il paziente.",
+  "created": "Paziente {code} creato. Annota il codice nella tua cartella clinica.",
+  "editTitle": "Modifica {code}",
+  "newTitle": "Nuovo paziente",
+  "formSubtitle": "Servono solo i dati utili a scegliere e adattare gli esercizi.",
+  "pseudonymNotice": "Il codice del paziente viene generato automaticamente. Tieni la corrispondenza codice ↔ nome solo nella tua documentazione, fuori da Sinapsi.",
+  "conditions": {
+    "neuro": {
+      "stroke": "Ictus",
+      "tbi": "Trauma cranico",
+      "tumor": "Tumore cerebrale",
+      "ms": "Sclerosi multipla",
+      "parkinson": "Malattia di Parkinson",
+      "epilepsy": "Epilessia",
+      "other": "Altra condizione neurologica"
+    },
+    "dementia": {
+      "mci": "Disturbo neurocognitivo lieve (MCI)",
+      "alzheimer": "Demenza di Alzheimer",
+      "vascular": "Demenza vascolare",
+      "ftd": "Demenza frontotemporale",
+      "lewy": "Demenza a corpi di Lewy"
+    },
+    "dev": {
+      "adhd": "ADHD",
+      "sld": "Disturbo specifico dell'apprendimento (DSA)",
+      "dld": "Disturbo del linguaggio",
+      "asd": "Disturbo dello spettro autistico",
+      "id": "Disabilità intellettiva",
+      "dcd": "Disturbo della coordinazione motoria"
+    },
+    "psy": {
+      "schizophrenia": "Schizofrenia",
+      "mood": "Disturbo dell'umore",
+      "other": "Altra condizione psichiatrica"
+    },
+    "aging": {
+      "healthy": "Invecchiamento sano"
+    },
+    "other": "Altro"
+  },
+  "noConditions": "Nessuna condizione indicata.",
+  "onsetYear": "Anno di esordio",
+  "icd11": "Codice ICD-11"
+}

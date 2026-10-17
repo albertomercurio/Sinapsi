@@ -1,0 +1,14 @@
+{
+  "name": "Connect in order",
+  "description": "Connect the circles in order: numbers first (1-2-3…), then alternating numbers and letters (1-A-2-B…). Trains speed, flexibility and alternating attention.",
+  "instructions": "Tap the circles in order, as fast as you can without mistakes.\nStart from the green circle \"1\": tap 2, then 3, then 4…\nIf you tap the wrong circle it turns red: find the right one and carry on.",
+  "instructionsKids": "Join the dots in order: 1, 2, 3… like in a puzzle book! ✏️",
+  "hintA": "Tap the numbers in order: 1 → 2 → 3 …",
+  "hintB": "Alternate numbers and letters: 1 → A → 2 → B → 3 → C …",
+  "partB": "Great! Now the second part: alternate a number and a letter, in order.\n1 → A → 2 → B → 3 → C …",
+  "giveUp": "I'll stop here",
+  "printA": "Join the circles with a line in numerical order (1-2-3…), without lifting the pen.",
+  "printB": "Join the circles alternating numbers and letters in order (1-A-2-B-3-C…), without lifting the pen.",
+  "printTime": "Time:",
+  "printErrors": "Errors:"
+}

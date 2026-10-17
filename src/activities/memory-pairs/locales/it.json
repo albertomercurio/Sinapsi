@@ -1,0 +1,6 @@
+{
+  "name": "Memory delle coppie",
+  "description": "Gira le carte due alla volta e trova le coppie uguali. Allena la memoria visiva e di lavoro.",
+  "instructions": "Le carte sono coperte. Toccane due per girarle.\nSe sono uguali restano scoperte, altrimenti si richiudono.\nRicorda dove si trovano e trova tutte le coppie!",
+  "instructionsKids": "Gira due carte alla volta e trova gli amici uguali!\nRicorda dove li hai visti. 🧠"
+}

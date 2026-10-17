@@ -1,0 +1,19 @@
+<script setup lang="ts">
+import type { HTMLAttributes } from 'vue'
+import { reactiveOmit } from '@vueuse/core'
+import { TabsContent, type TabsContentProps } from 'reka-ui'
+import { cn } from '@/shared/lib/utils'
+
+const props = defineProps<TabsContentProps & { class?: HTMLAttributes['class'] }>()
+const delegated = reactiveOmit(props, 'class')
+</script>
+
+<template>
+  <TabsContent
+    data-slot="tabs-content"
+    :class="cn('flex-1 outline-none', props.class)"
+    v-bind="delegated"
+  >
+    <slot />
+  </TabsContent>
+</template>

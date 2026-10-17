@@ -1,0 +1,76 @@
+{
+  "title": "Activities",
+  "subtitle": "Automatically generated exercises: a new variant every time, at the right difficulty for the patient.",
+  "try": "Try",
+  "tryAgain": "Try again",
+  "printSheet": "Paper worksheet",
+  "noMatch": "No activity matches the filters.",
+  "allDomains": "All areas",
+  "allAges": "All ages",
+  "allFormats": "All formats",
+  "fixed": "Fixed",
+  "ageGroup": "Age group",
+  "groups": {
+    "orientation": "Orientation",
+    "attention": "Attention",
+    "memory": "Memory",
+    "executive": "Executive functions",
+    "language": "Language",
+    "praxis": "Praxis",
+    "gnosis": "Gnosis",
+    "visuospatial": "Visuospatial skills",
+    "speed": "Processing speed",
+    "calculation": "Calculation",
+    "social": "Social cognition",
+    "adl": "Activities of daily living"
+  },
+  "domains": {
+    "orientation": "Orientation",
+    "attention": {
+      "sustained": "Sustained attention",
+      "selective": "Selective attention",
+      "alternating": "Alternating attention",
+      "divided": "Divided attention"
+    },
+    "memory": {
+      "working": "Working memory",
+      "episodic": "Episodic memory",
+      "semantic": "Semantic memory",
+      "visual": "Visual memory",
+      "verbal": "Verbal memory"
+    },
+    "executive": {
+      "planning": "Planning",
+      "inhibition": "Inhibition",
+      "flexibility": "Cognitive flexibility",
+      "reasoning": "Reasoning"
+    },
+    "language": "Language",
+    "praxis": "Praxis",
+    "gnosis": "Gnosis",
+    "visuospatial": "Visuospatial skills",
+    "speed": "Processing speed",
+    "calculation": "Calculation",
+    "social": "Social cognition",
+    "adl": "Daily living"
+  },
+  "runtime": {
+    "baselineInstructions": "Warm-up: tap the green circle as soon as it appears.",
+    "pause": "Pause",
+    "resume": "Resume",
+    "listen": "Listen",
+    "start": "Start",
+    "paused": "Paused",
+    "continue": "Continue",
+    "praise1": "You're done, well done!",
+    "praise2": "Very good!",
+    "praise3": "Excellent!"
+  },
+  "tryNotice": "Trial mode: results are not saved. Useful to get to know the exercise or to show it to the patient.",
+  "tryResults": "Trial results",
+  "tryResultsHelp": "These are the measures saved for every real run.",
+  "printTitle": "Printable worksheet",
+  "copies": "Copies",
+  "newVariant": "New variant",
+  "printHelp": "Each variant is different, so the patient cannot learn it by heart. Use \"Print\" and choose \"Save as PDF\" to keep it."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Sort it out",
+  "description": "Sort the pictures into the right category. At higher levels the rule changes (category ↔ size): trains semantic memory and cognitive flexibility.",
+  "instructions": "A picture will appear with its name.\nTap the right box at the bottom, or use the keys 1, 2, 3, 4.\nIf you see the sign at the top, follow its rule: sometimes you sort by CATEGORY, sometimes by SIZE.",
+  "instructionsKids": "Help me tidy up! Put every picture in its own little house. 🏠",
+  "byCategory": "Sort by CATEGORY",
+  "bySize": "Sort by SIZE"
+}
