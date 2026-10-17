@@ -5,7 +5,7 @@
 //
 //   invite         create an account (and optionally a practice) and either
 //                  e-mail the invitation (needs SMTP) or return a one-time link
-//                  the admin delivers personally (WhatsApp, in person…)
+//                  the admin copies and delivers personally
 //   password_link  one-time link to choose a new password (the user still
 //                  needs their 2FA code to complete it)
 //   reset_mfa      remove all 2FA devices: the user enrolls a new one at the

@@ -49,7 +49,7 @@
     "label": "Come consegnare l'invito",
     "link": "Link da inviare io",
     "email": "Email automatica",
-    "linkHelp": "Riceverai un link monouso (valido 24 ore) da mandare tu, per esempio su WhatsApp o di persona. Non serve configurare l'invio di email.",
+    "linkHelp": "Riceverai un link monouso (valido 24 ore) da copiare e mandare tu alla persona, come preferisci. Non serve configurare l'invio di email.",
     "emailHelp": "Sinapsi invia l'email da sola. In produzione richiede un servizio SMTP configurato (vedi la guida di messa in produzione)."
   },
   "link": {
@@ -58,10 +58,7 @@
     "help": "Invia questo link solo a {email}. Funziona una sola volta ed è valido per 24 ore.",
     "copy": "Copia il link",
     "copied": "Link copiato",
-    "share": "Condividi…",
-    "warning": "Chi ha il link può scegliere la password di questo account: mandalo solo alla persona interessata, su un canale cifrato (WhatsApp, Signal) o di persona. Per entrare servirà comunque il suo secondo fattore.",
-    "inviteMessage": "Ciao! Ecco il link per attivare il tuo account Sinapsi (valido 24 ore, usalo una sola volta): {link}",
-    "recoveryMessage": "Ecco il link per scegliere una nuova password su Sinapsi (valido 24 ore, una sola volta): {link}"
+    "warning": "Chi ha il link può scegliere la password di questo account: mandalo solo alla persona interessata, possibilmente su un canale cifrato o di persona. Per entrare servirà comunque il suo secondo fattore."
   },
   "passwordLink": "Link per una nuova password",
   "resetMfa": "Reimposta l'autenticazione a due fattori",

@@ -10,7 +10,7 @@
   computer/tablet; il terapista pianifica le sedute e consulta l'andamento.
 - **Dati:** vedi registro dei trattamenti. Nessun identificativo diretto; codici pseudonimi.
 - **Flussi:** browser → Supabase (Francoforte). File statici serviti da Cloudflare (nessun dato
-  sanitario). Email di invito/reset tramite Brevo (solo indirizzo email e link).
+  sanitario). Email di invito/reset tramite Brevo solo se attivate (solo indirizzo email e link); altrimenti i link sono consegnati di persona dall'amministratore.
 - **Tecnologie:** applicazione web, database Postgres con controllo accessi a livello di riga,
   autenticazione con secondo fattore, algoritmi di adattamento della difficoltà (non decisionali).
 

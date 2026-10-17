@@ -232,7 +232,7 @@ secure_password_change = true
 max_frequency = "1s"
 # Number of characters used in the email OTP.
 otp_length = 6
-# Invitation and password links stay valid 24 h (they may be delivered by WhatsApp, not instantly).
+# Invitation and password links stay valid 24 h (the admin delivers them by hand, not instantly).
 otp_expiry = 86400
 
 # Use a production-ready SMTP server

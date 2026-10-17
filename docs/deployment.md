@@ -47,9 +47,9 @@ pnpm dev
 7. **Authentication → Email Templates**: paste `supabase/templates/invite.html` into *Invite user*
    and `supabase/templates/recovery.html` into *Reset password* (they use `token_hash` links).
 8. **Authentication → Providers → Email → Email OTP Expiration**: `86400` (24 h), so links sent
-   by WhatsApp stay valid long enough.
+   by hand stay valid long enough.
    **E-mail is optional.** By default you create accounts from *Amministrazione* and get a one-time
-   link to send yourself (WhatsApp, Signal, in person); password-reset links work the same way. If you
+   link to copy and send yourself, however you like; password-reset links work the same way. If you
    prefer automatic e-mails, configure *Authentication → SMTP* (the built-in sender only reaches your
    own team): **Brevo** is free (300 e-mails/day, EU company, DPA in its terms). E-mails contain only
    the address and a one-time link.
@@ -73,7 +73,7 @@ pnpm dev
     ```
 
     Sign in to Sinapsi, enroll TOTP, open **Amministrazione → Nuovo studio**, create the practice
-    with *Link da inviare io*, and send her the one-time link (e.g. on WhatsApp). She opens it,
+    with *Link da inviare io*, and send her the one-time link yourself. She opens it,
     chooses a password and enrolls TOTP. If she later forgets the password or loses her phone, use
     the key / shield buttons next to her name (*Gestisci*) to create a new-password link or reset 2FA.
 12. She sets the **practice passphrase** for encrypted patient names in *Impostazioni → Studio*.

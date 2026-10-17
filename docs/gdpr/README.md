@@ -10,7 +10,7 @@
 |---|---|
 | Lo studio / il professionista che usa Sinapsi con i propri pazienti | **Titolare del trattamento** (art. 4.7) |
 | L'amministratore della piattaforma (gestisce gli account Supabase, Cloudflare, GitHub) | **Responsabile del trattamento** (art. 28) |
-| Supabase (database e autenticazione, Francoforte), Cloudflare (file statici), Brevo (email di invito/reset) | **Sub-responsabili** dell'amministratore |
+| Supabase (database e autenticazione, Francoforte), Cloudflare (file statici), Brevo (email di invito/reset, solo se attivate) | **Sub-responsabili** dell'amministratore |
 
 Ogni studio che usa la piattaforma è un titolare distinto: serve un accordo art. 28 per ciascuno.
 
@@ -52,7 +52,7 @@ Ogni studio che usa la piattaforma è un titolare distinto: serve un accordo art
 - [ ] Registro dei trattamenti aggiornato.
 - [ ] DPIA svolta (vedi motivazione in `dpia.md`).
 - [ ] Informativa consegnata (e, se necessario, consenso raccolto) a ogni paziente o genitore.
-- [ ] 2FA attiva su tutti gli account (Sinapsi, Supabase, Cloudflare, GitHub, Brevo).
+- [ ] 2FA attiva su tutti gli account (Sinapsi, Supabase, Cloudflare, GitHub e Brevo se usato).
 - [ ] Procedura di data breach condivisa tra titolare e responsabile.
 - [ ] Primo backup cifrato eseguito e conservato su supporto sicuro.
 

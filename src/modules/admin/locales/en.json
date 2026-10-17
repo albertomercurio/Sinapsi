@@ -49,7 +49,7 @@
     "label": "How to deliver the invitation",
     "link": "Link I send myself",
     "email": "Automatic email",
-    "linkHelp": "You get a one-time link (valid 24 hours) to send yourself, e.g. on WhatsApp or in person. No email service needs to be configured.",
+    "linkHelp": "You get a one-time link (valid 24 hours) to copy and send to the person yourself, however you like. No email service needs to be configured.",
     "emailHelp": "Sinapsi sends the email itself. In production this needs a configured SMTP service (see the deployment guide)."
   },
   "link": {
@@ -58,10 +58,7 @@
     "help": "Send this link only to {email}. It works once and is valid for 24 hours.",
     "copy": "Copy link",
     "copied": "Link copied",
-    "share": "Share…",
-    "warning": "Whoever has the link can choose this account's password: send it only to the person concerned, over an encrypted channel (WhatsApp, Signal) or in person. Their second factor will still be required to sign in.",
-    "inviteMessage": "Hi! Here is the link to activate your Sinapsi account (valid 24 hours, single use): {link}",
-    "recoveryMessage": "Here is the link to choose a new Sinapsi password (valid 24 hours, single use): {link}"
+    "warning": "Whoever has the link can choose this account's password: send it only to the person concerned, preferably over an encrypted channel or in person. Their second factor will still be required to sign in."
   },
   "passwordLink": "New-password link",
   "resetMfa": "Reset two-factor authentication",

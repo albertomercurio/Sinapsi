@@ -27,7 +27,7 @@ grafici dell'andamento nel tempo. Interfaccia in italiano e inglese, pensata per
   replay del percorso, relazione stampabile, esportazione CSV.
 - **Spiegazioni**: ogni misura e ogni grafico ha un "?" con una spiegazione in parole semplici e un
   collegamento alla **Guida** integrata (metodi spiegati passo per passo, con esempi e bibliografia).
-- **Account**: inviti e link per nuova password consegnabili senza email (es. WhatsApp), reset della 2FA,
+- **Account**: inviti e link per nuova password da copiare e consegnare di persona, senza email, reset della 2FA,
   tutto registrato nel registro attività dello studio.
 - **Sicurezza**: 2FA obbligatoria imposta dal database (RLS `aal2`), audit log immutabile, logout
   per inattività, CSP restrittiva, backup cifrati nel browser, admin di piattaforma senza accesso
