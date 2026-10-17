@@ -11,7 +11,7 @@
   "weekSessions": "Sedute nei prossimi 7 giorni",
   "exploreActivities": "Esplora le attività",
   "exploreHint": "Prova gli esercizi o stampa una scheda",
-  "backupTitle": "È ora di fare un backup",
-  "backupText": "Il piano gratuito non include backup automatici: scarica una copia cifrata dei dati almeno una volta alla settimana.",
+  "backupTitle": "Copia personale dei dati",
+  "backupText": "I backup automatici quotidiani sono gestiti dall'amministratore della piattaforma. Una volta al mese conserva anche una tua copia cifrata (con la tua frase segreta), così hai sempre i dati a disposizione.",
   "backupNow": "Fai il backup"
 }

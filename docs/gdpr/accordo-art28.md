@@ -35,7 +35,10 @@ Il Responsabile:
 a. tratta i dati solo su istruzione documentata del Titolare (il presente accordo e l'uso delle
    funzioni della piattaforma costituiscono istruzioni);
 b. garantisce la riservatezza: si impegna a **non consultare i dati clinici** se non quando
-   strettamente necessario per assistenza tecnica richiesta dal Titolare, e ne tiene traccia;
+   strettamente necessario per assistenza tecnica richiesta dal Titolare, e ne tiene traccia; crea
+   link di accesso, link per nuova password o reimposta la 2FA degli utenti solo su richiesta del
+   Titolare o dell'utente interessato, consegnandoli esclusivamente a quest'ultimo (operazioni
+   registrate nel registro attività dello studio);
 c. adotta le misure di sicurezza dell'Allegato A (art. 32);
 d. ricorre ai sub-responsabili elencati nell'Allegato B, con autorizzazione generale del Titolare;
    informa il Titolare con almeno 30 giorni di anticipo di ogni modifica, consentendogli di opporsi;
@@ -53,8 +56,9 @@ Il Titolare:
 
 a. fornisce ai pazienti (o ai genitori/tutori) l'informativa e, ove necessario, raccoglie il
    consenso — obbligo richiesto anche dal DPA di Supabase per i dati sensibili;
-b. non inserisce in Sinapsi nomi, codici fiscali, recapiti o altri dati identificativi diretti, e
-   conserva la corrispondenza codice ↔ paziente al di fuori della piattaforma;
+b. non inserisce in Sinapsi codici fiscali, recapiti o altri identificativi diretti al di fuori dei
+   campi nome/cognome cifrati; custodisce la frase segreta dello studio (chiave dei nomi), che il
+   Responsabile non conosce e non può recuperare;
 c. mantiene attiva l'autenticazione a due fattori e custodisce credenziali e frase segreta dei backup;
 d. esegue periodicamente i backup cifrati messi a disposizione dalla piattaforma.
 

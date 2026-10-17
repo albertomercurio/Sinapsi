@@ -44,5 +44,28 @@
       "membership_failed": "Non è stato possibile aggiungere la persona allo studio.",
       "unauthorized": "Sessione scaduta: accedi di nuovo."
     }
-  }
+  },
+  "delivery": {
+    "label": "Come consegnare l'invito",
+    "link": "Link da inviare io",
+    "email": "Email automatica",
+    "linkHelp": "Riceverai un link monouso (valido 24 ore) da mandare tu, per esempio su WhatsApp o di persona. Non serve configurare l'invio di email.",
+    "emailHelp": "Sinapsi invia l'email da sola. In produzione richiede un servizio SMTP configurato (vedi la guida di messa in produzione)."
+  },
+  "link": {
+    "inviteTitle": "Link di attivazione dell'account",
+    "recoveryTitle": "Link per scegliere una nuova password",
+    "help": "Invia questo link solo a {email}. Funziona una sola volta ed è valido per 24 ore.",
+    "copy": "Copia il link",
+    "copied": "Link copiato",
+    "share": "Condividi…",
+    "warning": "Chi ha il link può scegliere la password di questo account: mandalo solo alla persona interessata, su un canale cifrato (WhatsApp, Signal) o di persona. Per entrare servirà comunque il suo secondo fattore.",
+    "inviteMessage": "Ciao! Ecco il link per attivare il tuo account Sinapsi (valido 24 ore, usalo una sola volta): {link}",
+    "recoveryMessage": "Ecco il link per scegliere una nuova password su Sinapsi (valido 24 ore, una sola volta): {link}"
+  },
+  "passwordLink": "Link per una nuova password",
+  "resetMfa": "Reimposta l'autenticazione a due fattori",
+  "resetMfaTitle": "Reimpostare la 2FA di {email}?",
+  "resetMfaText": "Verranno rimossi tutti i dispositivi di autenticazione di questa persona (per esempio se ha perso il telefono). Al prossimo accesso dovrà configurarne uno nuovo. L'operazione resta nel registro attività dello studio.",
+  "mfaResetDone": "Autenticazione a due fattori reimpostata ({n} dispositivi rimossi)"
 }

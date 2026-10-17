@@ -174,7 +174,7 @@ begin
   return v_count;
 end $$;
 
--- Used by the admin-invite Edge Function (service role only) to find an existing account.
+-- Used by the admin-accounts Edge Function (service role only) to find an existing account.
 create function public.admin_user_id_by_email(p_email text) returns uuid
 language sql stable security definer set search_path = '' as $$
   select u.id from auth.users u where lower(u.email) = lower(btrim(p_email)) limit 1

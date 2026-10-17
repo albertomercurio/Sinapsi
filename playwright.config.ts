@@ -5,8 +5,9 @@ import { defineConfig, devices } from '@playwright/test'
  * End-to-end tests run against the production build (`vite preview`, which
  * serves the same security headers as production) and the local Supabase
  * stack (`pnpm exec supabase start`). The global setup resets the database.
+ * `E2E_PORT=4174 pnpm test:e2e` if a preview server already holds 4173.
  */
-const PORT = 4173
+const PORT = Number(process.env.E2E_PORT ?? 4173)
 
 export default defineConfig({
   testDir: './e2e',

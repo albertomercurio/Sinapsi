@@ -44,5 +44,6 @@
   "forgotSent": "Se l'indirizzo è registrato, riceverai a breve un'email con il link.",
   "sendLink": "Invia il link",
   "noOrgTitle": "Nessuno studio associato",
-  "noOrgSubtitle": "Il tuo account non fa ancora parte di uno studio. Contatta l'amministratore della piattaforma."
+  "noOrgSubtitle": "Il tuo account non fa ancora parte di uno studio. Contatta l'amministratore della piattaforma.",
+  "forgotAlternative": "Se hai attivato l'invio delle email, riceverai un link. In alternativa chiedi all'amministratore della piattaforma un link per scegliere una nuova password: te lo può mandare anche su WhatsApp."
 }

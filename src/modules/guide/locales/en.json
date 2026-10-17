@@ -1,0 +1,12 @@
+{
+  "title": "Guide",
+  "subtitle": "What Sinapsi measures and how to read the charts, explained without assuming any background.",
+  "search": "Search the guide",
+  "searchPlaceholder": "Search, e.g. “trend”",
+  "contents": "Contents",
+  "references": "References",
+  "bibliography": "Full bibliography",
+  "bibliographyIntro": "The scientific papers the methods described here are based on. Links open in a new tab on the publisher's website.",
+  "noResults": "No section contains “{q}”.",
+  "newTab": "(opens in a new tab)"
+}

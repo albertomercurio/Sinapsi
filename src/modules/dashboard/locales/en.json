@@ -11,7 +11,7 @@
   "weekSessions": "Sessions in the next 7 days",
   "exploreActivities": "Explore activities",
   "exploreHint": "Try the exercises or print a worksheet",
-  "backupTitle": "Time for a backup",
-  "backupText": "The free plan has no automatic backups: download an encrypted copy of the data at least once a week.",
+  "backupTitle": "Personal copy of the data",
+  "backupText": "Daily automatic backups are handled by the platform administrator. Once a month, also keep your own encrypted copy (with your passphrase), so the data is always at hand.",
   "backupNow": "Back up now"
 }

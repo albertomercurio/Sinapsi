@@ -58,9 +58,14 @@ $$, '22023', null, 'delete_patient requires the exact code');
 
 reset role;
 -- Expire the raw events and purge.
-update public.activity_run_events set expires_at = now() - interval '1 day';
+-- Only this test's rows expire, so other data in the database (e.g. demo seed) does not matter.
+update public.activity_run_events set expires_at = now() - interval '1 day'
+  where run_id in (select id from public.activity_runs
+                   where patient_id = 'd2000000-0000-4000-8000-000000000001');
 select is(app.purge_expired_run_events(), 1, 'retention job purges expired raw events');
-select is((select count(*) from public.activity_runs), 2::bigint, 'summary runs survive the purge');
+select is((select count(*) from public.activity_runs
+           where patient_id = 'd2000000-0000-4000-8000-000000000001'),
+          2::bigint, 'summary runs survive the purge');
 
 set local role authenticated;
 set local request.jwt.claims to '{"sub":"d0000000-0000-4000-8000-000000000001","role":"authenticated","aal":"aal2"}';

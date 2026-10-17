@@ -6,6 +6,7 @@ import activities from '@/modules/activities'
 import sessions from '@/modules/sessions'
 import results from '@/modules/results'
 import settings from '@/modules/settings'
+import guide from '@/modules/guide'
 import admin from '@/modules/admin'
 
 /** Registry of feature modules. Adding a module = one import + one entry. */
@@ -17,6 +18,7 @@ export const modules: AppModule[] = [
   sessions,
   results,
   settings,
+  guide,
   admin,
 ]
 

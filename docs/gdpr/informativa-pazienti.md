@@ -8,9 +8,9 @@
 [DPO, se nominato: contatti.]
 
 **Quali dati trattiamo.** Durante il percorso useremo un programma di esercizi al computer
-chiamato Sinapsi. Nel programma **non inseriamo il suo nome né altri dati che la identifichino
-direttamente**: lei sarà indicato/a con un codice (per esempio "PZ-7K3M"). La corrispondenza tra
-il codice e il suo nome è conservata solo nella cartella dello studio. Nel programma registriamo:
+chiamato Sinapsi. Nel programma lei è identificato/a da un codice (per esempio "PZ-7K3M"). Il suo
+nome e cognome, se inseriti, sono **cifrati sul computer dello studio** prima di essere salvati: il
+fornitore della piattaforma e i suoi fornitori vedono solo dati illeggibili. Nel programma registriamo:
 anno di nascita, sesso, anni di scolarità, mano dominante, la categoria della condizione per cui è
 seguito/a, eventuali note del terapista, le sedute svolte e i risultati degli esercizi (tempi di
 risposta, errori, movimenti del mouse o del dito sullo schermo). Sono dati relativi alla salute.

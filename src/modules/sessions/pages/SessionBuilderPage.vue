@@ -15,6 +15,7 @@ import type { SessionMode } from '@/shared/api/types'
 import { useAuthStore } from '@/modules/auth/store'
 import { usePatients } from '@/modules/patients/api'
 import { patientAgeGroup } from '@/modules/patients/helpers'
+import { useNamesStore } from '@/modules/patients/names/store'
 import {
   cleanItems,
   itemsFromSession,
@@ -59,8 +60,14 @@ watch(existing, (s) => {
 })
 
 const patient = computed(() => patients.value?.find((p) => p.id === patientId.value) ?? null)
+const names = useNamesStore()
+watch([patients, () => names.status], () => void names.decryptAll(patients.value ?? []), {
+  immediate: true,
+})
 const patientOptions = computed(() =>
-  (patients.value ?? []).map((p) => ({ value: p.id, label: p.code })),
+  (patients.value ?? [])
+    .map((p) => ({ value: p.id, label: names.label(p) ? `${names.label(p)} · ${p.code}` : p.code }))
+    .sort((a, b) => a.label.localeCompare(b.label)),
 )
 const templateOptions = computed(() => [
   { value: null, label: t('sessions.noTemplate') },

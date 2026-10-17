@@ -16,6 +16,7 @@ import { chooseDifficulty, type DifficultyChoice } from '@/modules/activities/ad
 import ActivityHost from '@/modules/activities/runtime/ActivityHost.vue'
 import type { CompletedRun } from '@/modules/activities/runtime/types'
 import { patientAgeGroup, patientPrefs } from '@/modules/patients/helpers'
+import PatientLabel from '@/modules/patients/names/PatientLabel.vue'
 import { fetchAbilities } from '@/modules/results/api'
 import { useQueryClient } from '@tanstack/vue-query'
 import { setSessionStatus, type SessionWithItems } from '../api'
@@ -240,7 +241,7 @@ onBeforeUnmount(() => window.removeEventListener('beforeunload', beforeUnload))
           <CardHeader>
             <CardTitle class="text-xl">
               {{ session.title || t('sessions.untitled') }} ·
-              <span class="font-mono">{{ patient.code }}</span>
+              <PatientLabel :patient="patient" />
             </CardTitle>
             <CardDescription>{{ t('sessions.runner.prepareHelp') }}</CardDescription>
           </CardHeader>

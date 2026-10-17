@@ -28,6 +28,7 @@ import {
 } from '../analysis'
 import { formatMetric } from '../format'
 import ChartCard from './ChartCard.vue'
+import InfoTip from '@/shared/components/InfoTip.vue'
 import MetricCard from './MetricCard.vue'
 import AbilityLock from './AbilityLock.vue'
 import AbilityChart from '../charts/AbilityChart.vue'
@@ -161,7 +162,12 @@ async function exportCsv() {
           />
         </div>
         <div class="grid gap-1">
-          <Label class="text-xs">{{ t('results.inputLabel') }}</Label
+          <Label class="text-xs"
+            >{{ t('results.inputLabel') }}
+            <InfoTip
+              :text="t('help.inputDevice')"
+              :label="t('results.inputLabel')"
+              guide="reaction-times" /></Label
           ><NativeSelect
             v-model="filter.input"
             :options="inputOptions"
@@ -170,8 +176,12 @@ async function exportCsv() {
           />
         </div>
         <label class="flex h-9 items-center gap-2 text-sm"
-          ><Switch v-model="filter.excludeFlagged" /> {{ t('results.excludeFlagged') }}</label
-        >
+          ><Switch v-model="filter.excludeFlagged" /> {{ t('results.excludeFlagged') }}
+          <InfoTip
+            :text="t('help.excludeFlagged')"
+            :label="t('results.excludeFlagged')"
+            guide="quality"
+        /></label>
         <div class="ml-auto flex gap-2">
           <Button variant="outline" size="sm" @click="exportCsv"><Download /> CSV</Button>
           <Button
@@ -184,7 +194,12 @@ async function exportCsv() {
       </div>
 
       <section class="grid gap-4 xl:grid-cols-2">
-        <ChartCard :title="t('results.domainTitle')" :subtitle="t('results.domainSubtitle')">
+        <ChartCard
+          :title="t('results.domainTitle')"
+          :subtitle="t('results.domainSubtitle')"
+          :help="t('help.domainChart')"
+          guide="areas"
+        >
           <DomainChart
             v-if="composites.length"
             :series="composites"
@@ -209,7 +224,12 @@ async function exportCsv() {
             </table>
           </template>
         </ChartCard>
-        <ChartCard :title="t('results.profileTitle')" :subtitle="t('results.profileSubtitle')">
+        <ChartCard
+          :title="t('results.profileTitle')"
+          :subtitle="t('results.profileSubtitle')"
+          :help="t('help.profileChart')"
+          guide="areas"
+        >
           <div class="no-print mb-2 flex flex-wrap items-center gap-2 text-xs">
             <Input
               v-model="profileFrom"
@@ -254,6 +274,8 @@ async function exportCsv() {
         <ChartCard
           class="xl:col-span-2"
           :title="t('results.calendarTitle')"
+          :help="t('help.calendarChart')"
+          guide="areas"
           :subtitle="t('results.calendarSubtitle')"
         >
           <ActivityCalendar :days="calendar" :label="t('results.calendarTitle')" />
@@ -295,7 +317,12 @@ async function exportCsv() {
             :ability="abilities?.find((a) => a.activity_id === activity.id)"
           />
         </header>
-        <ChartCard :title="t('results.abilityTitle')" :subtitle="t('results.abilitySubtitle')">
+        <ChartCard
+          :title="t('results.abilityTitle')"
+          :subtitle="t('results.abilitySubtitle')"
+          :help="t('help.abilityChart')"
+          guide="ability"
+        >
           <AbilityChart
             :points="abilitySeries(runs, activity.id)"
             :label="t('results.abilityTitle')"

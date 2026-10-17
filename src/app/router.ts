@@ -15,7 +15,11 @@ export function createAppRouter() {
         meta: { public: true, layout: 'auth' },
       },
     ],
-    scrollBehavior: () => ({ top: 0 }),
+    // Anchors (e.g. /guide#trends) scroll below the sticky mobile header.
+    scrollBehavior: (to) =>
+      to.hash && document.getElementById(decodeURIComponent(to.hash.slice(1)))
+        ? { el: to.hash, top: 72 }
+        : { top: 0 },
   })
 
   installAuthGuards(router)

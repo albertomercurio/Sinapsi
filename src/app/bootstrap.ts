@@ -10,7 +10,27 @@ import { createAppRouter } from './router'
 import { i18n, initialLocale, setLocale } from './i18n'
 import { applyColorScheme } from '@/shared/composables/useColorScheme'
 
+/**
+ * After a deploy, a tab still running the previous version asks for page chunks
+ * that no longer exist. Reload once to pick up the new version instead of
+ * failing the navigation (guarded so a real outage cannot cause a reload loop).
+ */
+function reloadOnStaleChunks() {
+  const KEY = 'sinapsi.chunkReload'
+  window.addEventListener('vite:preloadError', (event) => {
+    try {
+      if (Date.now() - Number(sessionStorage.getItem(KEY) ?? 0) < 60_000) return
+      sessionStorage.setItem(KEY, String(Date.now()))
+    } catch {
+      return
+    }
+    event.preventDefault()
+    window.location.reload()
+  })
+}
+
 export async function bootstrap() {
+  reloadOnStaleChunks()
   applyColorScheme()
   await setLocale(initialLocale())
 

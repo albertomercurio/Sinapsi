@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { Archive, Plus, Search, Users } from '@lucide/vue'
@@ -14,6 +14,8 @@ import { useAuthStore } from '@/modules/auth/store'
 import { usePatients } from '../api'
 import { patientAge, patientAgeGroup } from '../helpers'
 import PatientFormDialog from '../components/PatientFormDialog.vue'
+import NamesBanner from '../names/NamesBanner.vue'
+import { useNamesStore } from '../names/store'
 
 const { t, d } = useI18n()
 const auth = useAuthStore()
@@ -22,11 +24,28 @@ const archived = ref(false)
 const q = ref('')
 const createOpen = ref(false)
 const { data, isLoading } = usePatients(() => auth.currentOrgId, archived)
+const names = useNamesStore()
+
+watch([data, () => names.status], () => void names.decryptAll(data.value ?? []), {
+  immediate: true,
+})
 
 const rows = computed(() => {
-  const term = q.value.trim().toUpperCase()
+  const term = q.value.trim().toLowerCase()
   return (data.value ?? [])
-    .filter((p) => !term || p.code.includes(term))
+    .map((p) => ({ ...p, name: names.label(p) }))
+    .filter(
+      (p) => !term || p.code.toLowerCase().includes(term) || p.name.toLowerCase().includes(term),
+    )
+    .sort((a, b) =>
+      a.name && b.name
+        ? a.name.localeCompare(b.name)
+        : a.name
+          ? -1
+          : b.name
+            ? 1
+            : a.code.localeCompare(b.code),
+    )
     .map((p) => {
       const done = p.sessions
         .filter((s) => s.status === 'completed')
@@ -54,9 +73,18 @@ const rows = computed(() => {
       </template>
     </PageHeader>
 
+    <NamesBanner />
+
     <div class="relative mb-4 max-w-sm">
       <Search class="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-      <Input v-model="q" class="pl-9 font-mono uppercase" :placeholder="t('patients.searchCode')" />
+      <Input
+        v-model="q"
+        class="pl-9"
+        :placeholder="
+          names.status === 'unlocked' ? t('patients.searchNameOrCode') : t('patients.searchCode')
+        "
+        :aria-label="t('common.search')"
+      />
     </div>
 
     <div v-if="isLoading" class="grid gap-2">
@@ -74,7 +102,7 @@ const rows = computed(() => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>{{ t('patients.code') }}</TableHead>
+            <TableHead>{{ t('patients.patient') }}</TableHead>
             <TableHead>{{ t('patients.age') }}</TableHead>
             <TableHead class="hidden md:table-cell">{{ t('patients.conditionsTitle') }}</TableHead>
             <TableHead class="hidden sm:table-cell">{{ t('patients.lastSession') }}</TableHead>
@@ -89,7 +117,16 @@ const rows = computed(() => {
             data-testid="patient-row"
             @click="router.push({ name: 'patient', params: { id: p.id } })"
           >
-            <TableCell class="font-mono font-semibold">{{ p.code }}</TableCell>
+            <TableCell>
+              <span v-if="p.name" class="font-semibold" data-testid="patient-name">{{
+                p.name
+              }}</span>
+              <span
+                class="font-mono"
+                :class="p.name ? 'text-muted-foreground ml-2 text-xs' : 'font-semibold'"
+                >{{ p.code }}</span
+              >
+            </TableCell>
             <TableCell>
               <span v-if="patientAge(p) !== null">{{ patientAge(p) }}</span>
               <span class="text-muted-foreground ml-2 text-xs">{{

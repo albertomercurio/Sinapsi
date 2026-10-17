@@ -10,7 +10,8 @@ grafici dell'andamento nel tempo. Interfaccia in italiano e inglese, pensata per
 
 ## Funzionalità
 
-- **Pazienti pseudonimi**: codice generato dal database (`PZ-7K3M`), nessun nome/data di nascita.
+- **Pazienti**: codice generato dal database (`PZ-7K3M`) e, se attivati, **nomi cifrati end-to-end**
+  nel browser con la frase segreta dello studio (né il server né l'amministratore possono leggerli).
 - **6 attività adattive** (generatori: ogni esecuzione è una variante nuova, riproducibile dal seme):
   Go/No-Go, Memory, Caccia al simbolo (cancellazione), Sequenze (span spaziale/cifre), Metti in
   ordine (categorie con cambio di regola), Collega in ordine (tipo Trail Making A/B). Schede
@@ -24,6 +25,10 @@ grafici dell'andamento nel tempo. Interfaccia in italiano e inglese, pensata per
 - **Andamento**: abilità stimata con intervallo al 95%, trend Theil–Sen + Mann–Kendall con IC
   bootstrap, composito per area, confronto tra due date, calendario, dettaglio prova per prova,
   replay del percorso, relazione stampabile, esportazione CSV.
+- **Spiegazioni**: ogni misura e ogni grafico ha un "?" con una spiegazione in parole semplici e un
+  collegamento alla **Guida** integrata (metodi spiegati passo per passo, con esempi e bibliografia).
+- **Account**: inviti e link per nuova password consegnabili senza email (es. WhatsApp), reset della 2FA,
+  tutto registrato nel registro attività dello studio.
 - **Sicurezza**: 2FA obbligatoria imposta dal database (RLS `aal2`), audit log immutabile, logout
   per inattività, CSP restrittiva, backup cifrati nel browser, admin di piattaforma senza accesso
   ai dati clinici.
@@ -68,7 +73,8 @@ Account di prova (solo locale, dati sintetici): `terapista@sinapsi.test` / `Sina
 `admin@sinapsi.test` / `Sinapsi-Admin-2026`. Al primo accesso viene richiesta la configurazione
 della 2FA. Le email (inviti, reset) arrivano su Mailpit: http://127.0.0.1:54324.
 
-Dati dimostrativi realistici (4 mesi di sedute simulate): `pnpm demo:seed`.
+Dati dimostrativi realistici (4 mesi di sedute simulate): `pnpm demo:seed`. La frase segreta dei nomi
+dimostrativi è `demo sinapsi studio`.
 
 ## Comandi
 
@@ -87,6 +93,7 @@ Dati dimostrativi realistici (4 mesi di sedute simulate): `pnpm demo:seed`.
 - [Architettura](docs/architecture.md) · [Metodi di misura e scoring](docs/scoring-methods.md)
 - [Aggiungere un'attività](docs/adding-an-activity.md) · [Aggiungere una lingua](docs/adding-a-language.md)
 - [Messa in produzione](docs/deployment.md) (Supabase Francoforte, Cloudflare, GitHub, checklist)
+- [Manutenzione](docs/maintenance.md) (aggiornamenti, account, backup, incidenti)
 - [GDPR: modelli e checklist](docs/gdpr/README.md)
 
 ## Licenza

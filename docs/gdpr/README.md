@@ -28,8 +28,10 @@ Ogni studio che usa la piattaforma è un titolare distinto: serve un accordo art
 
 ## Misure già incluse nella piattaforma
 
-- Pseudonimizzazione: nessun nome, codice fiscale o data di nascita; codice paziente generato dal
-  sistema; la tabella di corrispondenza codice ↔ nome resta **fuori** da Sinapsi, presso il titolare.
+- Pseudonimizzazione e cifratura end-to-end: nessun codice fiscale o data di nascita; codice paziente
+  generato dal sistema; **nome e cognome (facoltativi) sono cifrati nel browser** con una chiave
+  ricavata dalla frase segreta dello studio, che non lascia mai i dispositivi dei terapisti. Il
+  database, Supabase e l'amministratore vedono solo testo cifrato.
 - Minimizzazione: solo anno di nascita, sesso, scolarità, lateralità, categorie cliniche.
 - Dati ospitati nell'UE (Francoforte), cifrati in transito (TLS) e a riposo.
 - Autenticazione a due fattori obbligatoria, imposta dal database; disconnessione per inattività.
@@ -37,8 +39,11 @@ Ogni studio che usa la piattaforma è un titolare distinto: serve un accordo art
   ha accesso applicativo ai dati clinici.
 - Registro delle attività immutabile (creazioni, modifiche, eliminazioni, esportazioni, backup).
 - Diritti degli interessati: esportazione JSON completa del paziente, cancellazione definitiva.
+- Operazioni dell'amministratore sugli account (link di attivazione o per nuova password, reset della
+  2FA) registrate nel registro attività dello studio, visibile al titolare.
 - Conservazione: registrazioni dettagliate cancellate automaticamente dopo il periodo impostato.
-- Backup cifrati con chiave nota solo al titolare.
+- Backup automatici quotidiani cifrati (chiave privata conservata offline dal responsabile) e copie
+  cifrate del titolare con una frase segreta nota solo a lui.
 - Nessun tracciamento, nessun servizio di analisi o terze parti nel browser.
 
 ## Checklist prima di inserire dati reali

@@ -12,6 +12,8 @@ export interface Membership {
   patient_code_prefix: string
   idle_timeout_min: number
   raw_retention_months: number
+  /** Public parameters of the practice's names passphrase (null = names not enabled). */
+  name_key: import('@/modules/patients/names/crypto').NameKeyParams | null
 }
 
 export interface UserContext {

@@ -2,8 +2,10 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ChartLine, Table2 } from '@lucide/vue'
+import InfoTip from '@/shared/components/InfoTip.vue'
+import type { GuideSectionId } from '@/modules/guide/sections'
 
-defineProps<{ title: string; subtitle?: string }>()
+defineProps<{ title: string; subtitle?: string; help?: string; guide?: GuideSectionId }>()
 const { t } = useI18n()
 const view = ref<'chart' | 'table'>('chart')
 </script>
@@ -12,7 +14,9 @@ const view = ref<'chart' | 'table'>('chart')
   <section class="bg-card rounded-xl border p-4 shadow-xs break-inside-avoid">
     <header class="mb-2 flex items-start justify-between gap-3">
       <div class="min-w-0">
-        <h3 class="text-sm font-semibold">{{ title }}</h3>
+        <h3 class="flex items-center gap-1 text-sm font-semibold">
+          {{ title }}<InfoTip v-if="help" :text="help" :label="title" :guide="guide" />
+        </h3>
         <p v-if="subtitle" class="text-muted-foreground mt-0.5 text-xs">{{ subtitle }}</p>
       </div>
       <div class="flex shrink-0 items-center gap-2">

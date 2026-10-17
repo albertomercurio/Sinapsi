@@ -79,7 +79,10 @@
       "backup_export": "backup",
       "backup_restore": "restore",
       "invite": "invitation",
-      "member_added": "member added"
+      "member_added": "member added",
+      "invite_link": "invitation link",
+      "password_link": "new-password link",
+      "mfa_reset": "2FA reset"
     },
     "entities": {
       "patients": "Patient",
@@ -89,7 +92,8 @@
       "activity_runs": "Run",
       "patient_ability": "Difficulty",
       "memberships": "Member",
-      "organizations": "Practice"
+      "organizations": "Practice",
+      "accounts": "Account"
     }
   }
 }

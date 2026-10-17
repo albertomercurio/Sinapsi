@@ -60,6 +60,8 @@ export function usePatientConditions(id: MaybeRefOrGetter<string>) {
 }
 
 export interface PatientInput {
+  /** End-to-end encrypted "first + last name" (v1.iv.ciphertext), or null. */
+  name_enc?: string | null
   birth_year: number | null
   sex: 'F' | 'M' | 'X' | null
   education_years: number | null
@@ -156,7 +158,10 @@ export function useRemoveCondition() {
  * Everything stored about one patient (GDPR art. 15/20 access & portability),
  * as a JSON document. The export is logged in the audit trail.
  */
-export async function exportPatientData(patient: Patient) {
+export async function exportPatientData(
+  patient: Patient,
+  name: { first: string; last: string } | null = null,
+) {
   const [conditions, sessions, items, runs, abilities] = await Promise.all([
     supabase.from('patient_conditions').select('*').eq('patient_id', patient.id),
     supabase.from('sessions').select('*').eq('patient_id', patient.id),
@@ -171,7 +176,8 @@ export async function exportPatientData(patient: Patient) {
     format: 'sinapsi-patient-export',
     version: 1,
     exported_at: new Date().toISOString(),
-    patient,
+    // Decrypted in the browser for the export; the server only holds name_enc.
+    patient: { ...patient, name: name ?? undefined },
     conditions: unwrap(conditions),
     sessions: unwrap(sessions),
     session_items: (unwrap(items) as Record<string, unknown>[]).map(

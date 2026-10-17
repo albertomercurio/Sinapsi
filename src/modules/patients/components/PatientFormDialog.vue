@@ -19,6 +19,9 @@ import { currentLocale } from '@/app/i18n'
 import { useAuthStore } from '@/modules/auth/store'
 import { type PatientInput, useCreatePatient, useUpdatePatient } from '../api'
 import PatientForm from './PatientForm.vue'
+import PatientNameFields from '../names/PatientNameFields.vue'
+import { useNamesStore } from '../names/store'
+import type { PatientName } from '../names/crypto'
 
 const props = defineProps<{ patient?: Patient | null }>()
 const emit = defineEmits<{ saved: [patient: Patient] }>()
@@ -55,13 +58,20 @@ function fromPatient(p: Patient): PatientInput {
 }
 
 const form = ref<PatientInput>(blank())
-watch(open, (v) => {
-  if (v) form.value = props.patient ? fromPatient(props.patient) : blank()
+const names = useNamesStore()
+const name = ref<PatientName>({ first: '', last: '' })
+watch(open, async (v) => {
+  if (!v) return
+  form.value = props.patient ? fromPatient(props.patient) : blank()
+  if (props.patient) await names.decryptAll([props.patient])
+  name.value = { ...(names.nameOf(props.patient) ?? { first: '', last: '' }) }
 })
 
 async function save() {
   try {
-    const payload = { ...form.value, notes: form.value.notes?.trim() || null }
+    const payload: PatientInput = { ...form.value, notes: form.value.notes?.trim() || null }
+    // Names are encrypted here, in the browser; without the key they are left untouched.
+    if (names.status === 'unlocked') payload.name_enc = await names.encrypt(name.value)
     const saved = props.patient
       ? await update.mutateAsync({ id: props.patient.id, patch: payload })
       : await create.mutateAsync({ ...payload, org_id: auth.currentOrgId! })
@@ -87,6 +97,7 @@ async function save() {
         <ShieldCheck />
         <AlertDescription>{{ t('patients.pseudonymNotice') }}</AlertDescription>
       </Alert>
+      <PatientNameFields v-model="name" />
       <PatientForm v-model="form" />
       <DialogFooter>
         <Button variant="outline" @click="open = false">{{ t('common.cancel') }}</Button>

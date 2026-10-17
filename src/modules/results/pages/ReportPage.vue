@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowLeft, Printer } from '@lucide/vue'
 import { Button } from '@/shared/ui/button'
 import { NativeSelect } from '@/shared/ui/select'
+import { Switch } from '@/shared/ui/switch'
 import { Textarea } from '@/shared/ui/textarea'
 import BrandMark from '@/shared/components/BrandMark.vue'
 import { supabase } from '@/shared/api/supabase'
 import { useAuthStore } from '@/modules/auth/store'
 import { usePatient } from '@/modules/patients/api'
 import { patientAge, patientAgeGroup } from '@/modules/patients/helpers'
+import { useNamesStore } from '@/modules/patients/names/store'
 import { usePatientRuns } from '../api'
 import {
   abilitySeries,
@@ -35,6 +37,11 @@ const { data: patient } = usePatient(id)
 const { data: allRuns } = usePatientRuns(id)
 const sinceDays = ref<number | null>(90)
 const notes = ref('')
+const names = useNamesStore()
+const showName = ref(true)
+watchEffect(() => {
+  if (patient.value && names.status === 'unlocked') void names.decryptAll([patient.value])
+})
 
 const runs = computed(() =>
   filterRuns(allRuns.value ?? [], {
@@ -98,6 +105,9 @@ function printNow() {
         class="w-48"
         :aria-label="t('results.periodLabel')"
       />
+      <label v-if="names.status === 'unlocked'" class="flex items-center gap-2 text-sm">
+        <Switch v-model="showName" /> {{ t('results.printName') }}
+      </label>
       <Button class="ml-auto" @click="printNow"><Printer /> {{ t('common.print') }}</Button>
     </div>
     <article
@@ -114,7 +124,17 @@ function printNow() {
           </p>
         </div>
         <div class="text-right text-sm">
-          <p class="font-mono text-2xl font-bold">{{ patient.code }}</p>
+          <p v-if="showName && names.label(patient)" class="text-2xl font-bold">
+            {{ names.label(patient) }}
+          </p>
+          <p
+            class="font-mono"
+            :class="
+              showName && names.label(patient) ? 'text-muted-foreground' : 'text-2xl font-bold'
+            "
+          >
+            {{ patient.code }}
+          </p>
           <p class="text-muted-foreground">
             <template v-if="patientAge(patient) !== null"
               >{{ t('patients.ageYears', { n: patientAge(patient) }) }} · </template

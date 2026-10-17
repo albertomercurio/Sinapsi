@@ -1,7 +1,7 @@
 /* eslint-disable playwright/no-wait-for-timeout -- the exercise has real timing (card flips, long press to exit) */
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test, type Page } from '@playwright/test'
-import { THERAPIST, login, watchCsp } from './helpers'
+import { THERAPIST, accessToken, localEnv, login, watchCsp } from './helpers'
 
 test.describe.configure({ mode: 'serial' })
 
@@ -25,14 +25,50 @@ test('first login forces TOTP enrollment', async () => {
   await expect(page.getByRole('heading', { level: 1 })).toContainText(/Buon|Good/)
 })
 
-test('creates a pseudonymous patient with a generated code', async () => {
+test('the owner turns on end-to-end encrypted names', async () => {
+  await page.goto('/settings/organization')
+  await page.getByTestId('names-new-pass').fill('frase segreta dello studio')
+  await page.getByTestId('names-new-pass2').fill('frase segreta dello studio')
+  await page.getByTestId('names-enable').click()
+  await expect(page.getByText('Nomi cifrati attivati')).toBeVisible()
+})
+
+test('creates a patient: generated code, name stored only as ciphertext', async () => {
   await page.goto('/patients')
   await page.getByTestId('new-patient').click()
+  await page.getByTestId('first-name').fill('Maria')
+  await page.getByTestId('last-name').fill('Rossi')
   await page.getByTestId('birth-year').fill('1952')
   await page.getByTestId('save-patient').click()
   await page.waitForURL(/\/patients\/[0-9a-f-]{36}$/)
-  patientCode = (await page.getByTestId('patient-code').textContent())!.trim()
+  await expect(page.getByTestId('patient-name')).toHaveText('Rossi Maria')
+  patientCode = (await page.getByTestId('patient-code').textContent())!.trim().slice(0, 7)
   expect(patientCode).toMatch(/^PZ-[A-Z0-9]{4}$/)
+
+  // What the database actually holds: ciphertext, no trace of the name.
+  const { url, key } = localEnv()
+  const res = await fetch(`${url}/rest/v1/patients?select=code,name_enc&code=eq.${patientCode}`, {
+    headers: { apikey: key, Authorization: `Bearer ${await accessToken(page)}` },
+  })
+  const [row] = await res.json()
+  expect(row.name_enc).toMatch(/^v1\./)
+  expect(JSON.stringify(row)).not.toMatch(/Rossi|Maria/)
+})
+
+test('another device sees only codes until the passphrase is entered', async ({ browser }) => {
+  const other = await (await browser.newContext({ locale: 'it-IT' })).newPage()
+  await login(other, THERAPIST, secret)
+  await other.goto('/patients')
+  await expect(other.getByText('I nomi sono cifrati')).toBeVisible()
+  await expect(other.getByText('Rossi Maria')).toHaveCount(0)
+  await other.getByTestId('names-unlock').click()
+  await other.getByTestId('names-passphrase').fill('sbagliata')
+  await other.getByTestId('names-unlock-submit').click()
+  await expect(other.getByText('Frase segreta non corretta.')).toBeVisible()
+  await other.getByTestId('names-passphrase').fill('frase segreta dello studio')
+  await other.getByTestId('names-unlock-submit').click()
+  await expect(other.getByTestId('patient-name').filter({ hasText: 'Rossi Maria' })).toBeVisible()
+  await other.context().close()
 })
 
 test('builds a session and runs it in locked patient mode', async () => {
@@ -91,11 +127,30 @@ test('shows the run in results and its detail page', async () => {
   await expect(page.getByText(/Efficienza mnestica|Memory efficiency/).first()).toBeVisible()
 })
 
+test('a "?" explains a measure and links to the matching guide section', async () => {
+  await page.getByRole('button', { name: /Che cosa significa\? Tentativi/ }).click()
+  const link = page.getByTestId('info-tip-guide')
+  await expect(link).toHaveAttribute('href', '/guide#memory')
+  await expect(link).toHaveAttribute('target', '_blank')
+  await page.goto('/guide#memory')
+  await expect(page.getByRole('heading', { level: 2, name: /Memoria/ })).toBeInViewport()
+  await page.getByRole('searchbox').fill('falsi allarmi')
+  await expect(page.locator('section[id]')).not.toHaveCount(0)
+  await expect(page.locator('#memory')).toHaveCount(0)
+})
+
 test('main screens have no serious or critical accessibility violations (axe)', async () => {
   const report: string[] = []
-  for (const path of ['/', '/patients', '/sessions', '/activities', '/settings/profile']) {
+  for (const path of [
+    '/',
+    '/patients',
+    '/sessions',
+    '/activities',
+    '/guide',
+    '/settings/profile',
+  ]) {
     await page.goto(path)
-    await page.waitForLoadState('networkidle')
+    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible()
     const res = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()
     for (const v of res.violations.filter(
       (x) => x.impact === 'serious' || x.impact === 'critical',

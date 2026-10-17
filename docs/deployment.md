@@ -2,6 +2,34 @@
 
 Cost: €0/month on the free tiers. All accounts below are owned by the **platform admin**, who is
 the GDPR *processor* for each practice (see `docs/gdpr/`). Turn on 2FA on **every** account.
+After go-live, see [maintenance.md](maintenance.md) for updates, accounts, backups and incidents.
+
+## 0. A preview first (fake patients only)
+
+There is no separate "demo" hosting: a preview **is** the production setup, used with invented
+patients until the go-live checklist at the end is complete.
+
+1. Do sections 1–3 below (about an hour). You can skip SMTP (§1.8) and leave backups (§4) for later.
+2. Create her practice and send her the activation link (§1.11).
+3. Before she starts, she needs an authenticator app on her phone (Google Authenticator, Microsoft
+   Authenticator, 2FAS, Aegis…). Ask her to use only invented patients (write "paziente di prova" in the
+   notes field) and no real names.
+4. When the GDPR items of the checklist are done, delete the test patients (or keep them) and start
+   with real ones. Nothing needs to be reinstalled.
+
+To show it on your own laptop instead, with three months of simulated history for six fake patients:
+
+```bash
+pnpm exec supabase start
+```
+
+```bash
+pnpm demo:seed
+```
+
+```bash
+pnpm dev
+```
 
 ## 1. Supabase (database, auth, edge function)
 
@@ -18,18 +46,21 @@ the GDPR *processor* for each practice (see `docs/gdpr/`). Turn on 2FA on **ever
    - Redirect URLs: `https://<your-domain>/auth/confirm`
 7. **Authentication → Email Templates**: paste `supabase/templates/invite.html` into *Invite user*
    and `supabase/templates/recovery.html` into *Reset password* (they use `token_hash` links).
-8. **Authentication → SMTP**: the built-in sender only delivers to your own team members and is
-   limited to a couple of e-mails per hour, so invitations need a custom SMTP. Free option:
-   **Brevo** (EU company, 300 e-mails/day, DPA in its terms). E-mails contain only the address and a
-   one-time link, never health data. Add Brevo to the sub-processor list.
+8. **Authentication → Providers → Email → Email OTP Expiration**: `86400` (24 h), so links sent
+   by WhatsApp stay valid long enough.
+   **E-mail is optional.** By default you create accounts from *Amministrazione* and get a one-time
+   link to send yourself (WhatsApp, Signal, in person); password-reset links work the same way. If you
+   prefer automatic e-mails, configure *Authentication → SMTP* (the built-in sender only reaches your
+   own team): **Brevo** is free (300 e-mails/day, EU company, DPA in its terms). E-mails contain only
+   the address and a one-time link.
 9. Apply the schema (tables, access rules, grants, nightly cleanup job) and deploy the invite function from your computer:
 
    ```bash
    pnpm exec supabase login
    pnpm exec supabase link --project-ref <project-ref>
    pnpm exec supabase db push
-   pnpm exec supabase functions deploy admin-invite
-   pnpm exec supabase secrets set ALLOWED_ORIGINS=https://<your-domain>
+   pnpm exec supabase functions deploy admin-accounts
+   pnpm exec supabase secrets set ALLOWED_ORIGINS=https://<your-domain> SITE_URL=https://<your-domain>
    ```
 
 10. **Database → Advisors**: run the Security Advisor; it should report no exposed tables.
@@ -42,17 +73,26 @@ the GDPR *processor* for each practice (see `docs/gdpr/`). Turn on 2FA on **ever
     ```
 
     Sign in to Sinapsi, enroll TOTP, open **Amministrazione → Nuovo studio**, create the practice
-    and invite its owner. She receives the e-mail, chooses a password and enrolls TOTP.
+    with *Link da inviare io*, and send her the one-time link (e.g. on WhatsApp). She opens it,
+    chooses a password and enrolls TOTP. If she later forgets the password or loses her phone, use
+    the key / shield buttons next to her name (*Gestisci*) to create a new-password link or reset 2FA.
+12. She sets the **practice passphrase** for encrypted patient names in *Impostazioni → Studio*.
 
 ## 2. Cloudflare (static hosting)
 
 1. Create an account (2FA on). **Workers & Pages → Create → Pages → Connect to Git**, pick the repo.
-2. Build settings: framework *None*, build command `pnpm build-only`, output directory `dist`.
+   The project name becomes the free address `https://<name>.pages.dev`.
+2. Build settings: production branch `main`, framework *None*, build command `pnpm build-only`,
+   output directory `dist`. Under *Settings → Builds → Branch control*, turn off automatic preview
+   deployments for other branches: each one would be another public address that Supabase does not
+   allow.
 3. Environment variables (Production): `VITE_SUPABASE_URL=https://<ref>.supabase.co`,
    `VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_…`, `NODE_VERSION=24`.
 4. The build emits `dist/_headers` (CSP restricted to your Supabase URL, HSTS, no referrer…).
    Single-page routing works out of the box (no `404.html` → Pages serves `index.html`).
-5. Add your custom domain, then set the same domain in Supabase (step 1.6) and `ALLOWED_ORIGINS`.
+5. Use `https://<name>.pages.dev` as `<your-domain>` in Supabase (step 1.6) and in `ALLOWED_ORIGINS` /
+   `SITE_URL`. A custom domain is optional (about €10/year); if you add one later, update those three
+   places.
 6. Do **not** enable Web Analytics or other Cloudflare add-ons that inject scripts.
 
 > Vercel works too (Pro plan, because the Hobby plan is non-commercial and its DPA only covers Pro):
@@ -70,12 +110,34 @@ the GDPR *processor* for each practice (see `docs/gdpr/`). Turn on 2FA on **ever
 
 ## 4. Backups (the Free plan has none)
 
-- **Per practice (owner):** *Impostazioni → Privacy e backup → Scarica il backup cifrato* —
-  AES-256-GCM in the browser, passphrase known only to her. The dashboard reminds her after 7 days.
-- **Whole platform (admin):** `scripts/admin-backup.sh` on your own Mac (FileVault on) with
-  `SUPABASE_DB_URL` from *Connect → Session pooler*. Encrypts with `age` (or openssl). Never run it
-  in CI: health data must not pass through GitHub.
-- Test a restore at least once (into a local stack: `pg_restore` after decrypting).
+**Main protection — automatic daily backup on your Mac (admin):**
+
+```bash
+brew install libpq age
+```
+
+```bash
+brew link --force libpq
+```
+
+```bash
+scripts/backup-schedule.sh setup
+```
+
+The setup creates an **age key pair** (the public key stays on the Mac and encrypts backups without
+any secret; the **private key** is saved on the Desktop: print it or move it to a USB stick kept
+safely, then delete it from the Mac), stores the *Session pooler* connection string in the macOS
+Keychain, and installs a launchd job that runs `scripts/admin-backup.sh` **every day at 20:30**
+(if the Mac is asleep it runs when it wakes). The newest 30 backups are kept in `~/Sinapsi-backups`
+(FileVault on). Check with `scripts/backup-schedule.sh status`. Failures show a macOS notification.
+
+Never run backups in CI: health data must not pass through GitHub.
+
+**Extra copy — per practice (owner):** *Impostazioni → Privacy e backup → Scarica il backup cifrato*
+(AES-256-GCM in the browser, passphrase known only to her). The dashboard suggests it once a month.
+
+**Restore test** (do it once): decrypt with `age -d -i <private-key> <file> > dump`, then
+`pg_restore --no-owner -d <target-db-url> dump` (e.g. into a local stack).
 
 ## 5. Monitoring the free tier
 
@@ -85,13 +147,14 @@ the GDPR *processor* for each practice (see `docs/gdpr/`). Turn on 2FA on **ever
 
 ## Go-live checklist
 
-- [ ] Supabase project in **eu-central-1**, DPA downloaded; Cloudflare and Brevo DPAs accepted.
-- [ ] 2FA on Supabase, Cloudflare, GitHub, Brevo and on every Sinapsi account.
+- [ ] Supabase project in **eu-central-1**, DPA downloaded; Cloudflare DPA accepted (Brevo too, if used).
+- [ ] 2FA on Supabase, Cloudflare, GitHub (and Brevo, if used) and on every Sinapsi account.
 - [ ] Sign-ups disabled, password policy set, TOTP enabled, templates and redirect URL configured.
-- [ ] `supabase db push` done; Security Advisor clean; `admin-invite` deployed with `ALLOWED_ORIGINS`.
+- [ ] `supabase db push` done; Security Advisor clean; `admin-accounts` deployed with `ALLOWED_ORIGINS` and `SITE_URL`.
 - [ ] Production site served with the security headers (check with the browser dev tools).
 - [ ] Keep-alive workflow ran successfully once.
 - [ ] Art. 28 agreement signed with the practice owner; `docs/gdpr/` templates reviewed by a DPO or
       lawyer; privacy notice handed to patients (and parents of minors).
-- [ ] First encrypted backup downloaded and a test restore done.
+- [ ] Daily admin backup scheduled (`scripts/backup-schedule.sh status`), private key stored offline, test restore done.
+- [ ] Practice passphrase for encrypted names chosen and stored safely by the owner.
 - [ ] No real patient data entered before all of the above.

@@ -24,7 +24,7 @@ export interface SessionWithItems extends Session {
 
 export interface SessionListRow extends Session {
   session_items: { activity_id: string }[]
-  patients: { code: string } | null
+  patients: { id: string; org_id: string; code: string; name_enc: string | null } | null
 }
 
 export const sessionKeys = {
@@ -44,7 +44,7 @@ export function usePatientSessions(patientId: MaybeRefOrGetter<string>) {
       unwrap(
         await supabase
           .from('sessions')
-          .select('*, session_items(activity_id), patients(code)')
+          .select('*, session_items(activity_id), patients(id, org_id, code, name_enc)')
           .eq('patient_id', toValue(patientId))
           .order('scheduled_for', { ascending: false })
           .order('created_at', { ascending: false }),
@@ -64,7 +64,7 @@ export function useSessionsInRange(
       unwrap(
         await supabase
           .from('sessions')
-          .select('*, session_items(activity_id), patients(code)')
+          .select('*, session_items(activity_id), patients(id, org_id, code, name_enc)')
           .eq('org_id', toValue(orgId)!)
           .gte('scheduled_for', toValue(from))
           .lte('scheduled_for', toValue(to))

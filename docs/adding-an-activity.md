@@ -32,8 +32,14 @@ src/activities/my-task/
 - optionally `items: { difficulty, outcome }[]` for item-level ability updates (see span-sequence);
 - optional `flags` (e.g. `incomplete`).
 
-Describe the metrics in the manifest (`unit`, `polarity` +1/−1/0, `primary`), and add labels to
-`metrics.*` in `src/locales/*.json` when the key is new.
+Describe the metrics in the manifest (`unit`, `polarity` +1/−1/0, `primary`). When a key is new:
+
+- add its label to `metrics.*` and a plain-language explanation to `metricsHelp.*` in
+  `src/locales/*.json` (shown by the "?" next to the measure; write for a reader with no statistics
+  background);
+- map it to a section of the in-app guide in `src/modules/guide/sections.ts`, and extend that section
+  in `src/modules/guide/content/*.ts` if the measure is not explained there yet. A unit test fails
+  if a metric has no guide section.
 
 Bump `scoringVersion` whenever the formula changes.
 

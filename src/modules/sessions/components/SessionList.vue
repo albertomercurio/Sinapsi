@@ -6,6 +6,7 @@ import { Button } from '@/shared/ui/button'
 import { getActivity } from '@/modules/activities/registry'
 import type { SessionListRow } from '../api'
 import SessionStatusBadge from './SessionStatusBadge.vue'
+import PatientLabel from '@/modules/patients/names/PatientLabel.vue'
 
 defineProps<{ sessions: SessionListRow[]; showPatient?: boolean }>()
 const { t, d } = useI18n()
@@ -30,9 +31,9 @@ const router = useRouter()
           <RouterLink
             v-if="showPatient && s.patients"
             :to="{ name: 'patient', params: { id: s.patient_id } }"
-            class="mr-2 font-mono hover:underline"
-            >{{ s.patients.code }}</RouterLink
-          >
+            class="mr-2 hover:underline"
+            ><PatientLabel :patient="s.patients"
+          /></RouterLink>
           {{ s.title || t('sessions.untitled') }}
         </p>
         <p class="text-muted-foreground text-xs">

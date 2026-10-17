@@ -20,6 +20,7 @@ import {
 } from '../analysis'
 import TrendSparkline from './TrendSparkline.vue'
 import TrendBadge from './TrendBadge.vue'
+import InfoTip from '@/shared/components/InfoTip.vue'
 
 const props = defineProps<{ patient: Patient }>()
 const { t, n, d } = useI18n()
@@ -118,7 +119,10 @@ const rows = computed(() =>
         <thead class="text-muted-foreground text-left text-xs">
           <tr>
             <th class="p-3">{{ t('results.activityLabel') }}</th>
-            <th class="p-3 text-right">{{ t('results.ability') }}</th>
+            <th class="p-3 text-right">
+              {{ t('results.ability') }}
+              <InfoTip :text="t('metricsHelp.ability')" guide="ability" />
+            </th>
             <th class="p-3">{{ t('results.abilityTrend') }}</th>
             <th class="hidden p-3 md:table-cell">{{ t('results.mainMetric') }}</th>
             <th class="p-3 text-right">{{ t('results.stats.runs') }}</th>

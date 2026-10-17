@@ -19,6 +19,7 @@ import { chooseDifficulty } from '@/modules/activities/adaptive'
 import { qualityFlags, packRecording, toByteaHex, type RunRecording } from '@/modules/measurement'
 import { abilityAfter } from '@/modules/sessions/runner/saveRun'
 import { ratingToLevel, round } from '@/modules/scoring'
+import { createNameKey, encryptName } from '@/modules/patients/names/crypto'
 import * as sim from './demo/simulate'
 
 const run = process.env.SINAPSI_SEED_DEMO === '1'
@@ -48,6 +49,26 @@ describe.skipIf(!run)('demo data', () => {
       ['span-sequence', 'categorization', 'go-no-go', 'trail-connect'],
       ['memory-pairs', 'cancellation', 'categorization', 'span-sequence'],
     ]
+
+    // Demo names, end-to-end encrypted with the passphrase "demo sinapsi studio".
+    const orgId = patients![0]!.org_id
+    const { key: nameKey, params } = await createNameKey('demo sinapsi studio', orgId)
+    await db
+      .from('organizations')
+      .update({ name_key: params as never })
+      .eq('id', orgId)
+    const demoNames = [
+      { first: 'Giuseppina', last: 'Verdi' },
+      { first: 'Marco', last: 'Neri' },
+      { first: 'Sofia', last: 'Gallo' },
+    ]
+    for (const [i, p] of (patients ?? []).entries()) {
+      const n = demoNames[i % demoNames.length]!
+      await db
+        .from('patients')
+        .update({ name_enc: await encryptName(nameKey, n, p.org_id) })
+        .eq('id', p.id)
+    }
 
     for (const [pi, patient] of (patients ?? []).entries()) {
       const rng = createRng(1000 + pi)
@@ -182,13 +203,11 @@ describe.skipIf(!run)('demo data', () => {
             .select('id')
             .single()
           if (error) throw error
-          await db
-            .from('activity_run_events')
-            .insert({
-              run_id: runRow!.id,
-              org_id: patient.org_id,
-              payload: toByteaHex(packRecording(rec)),
-            })
+          await db.from('activity_run_events').insert({
+            run_id: runRow!.id,
+            org_id: patient.org_id,
+            payload: toByteaHex(packRecording(rec)),
+          })
           abilities.set(item.activity_id, {
             rating: after.rating,
             rd: after.rd,
@@ -199,17 +218,15 @@ describe.skipIf(!run)('demo data', () => {
         }
       }
       for (const [activity_id, a] of abilities) {
-        await db
-          .from('patient_ability')
-          .upsert({
-            patient_id: patient.id,
-            org_id: patient.org_id,
-            activity_id,
-            rating: round(a.rating, 2)!,
-            rd: round(a.rd, 2)!,
-            n_runs: a.n_runs,
-            last_run_at: a.last_run_at,
-          })
+        await db.from('patient_ability').upsert({
+          patient_id: patient.id,
+          org_id: patient.org_id,
+          activity_id,
+          rating: round(a.rating, 2)!,
+          rd: round(a.rd, 2)!,
+          n_runs: a.n_runs,
+          last_run_at: a.last_run_at,
+        })
         console.log(
           `${patient.code} ${activity_id}: L${ratingToLevel(a.rating).toFixed(2)} (latent ${latent[activity_id]!.toFixed(2)})`,
         )

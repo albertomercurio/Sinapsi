@@ -7,6 +7,7 @@ import { toast } from '@/shared/ui/toast'
 import { errorKey } from '@/shared/api/errors'
 import type { PatientAbility } from '@/shared/api/types'
 import DifficultyPicker from '@/modules/activities/components/DifficultyPicker.vue'
+import InfoTip from '@/shared/components/InfoTip.vue'
 import { useLockAbility } from '../api'
 
 const props = defineProps<{
@@ -64,5 +65,6 @@ async function apply(lockIt: boolean) {
       <Button size="sm" @click="apply(true)">{{ t('common.confirm') }}</Button>
       <Button size="sm" variant="ghost" @click="editing = false">{{ t('common.cancel') }}</Button>
     </template>
+    <InfoTip :text="t('help.abilityLock')" guide="ability" />
   </div>
 </template>

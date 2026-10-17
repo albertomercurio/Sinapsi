@@ -1,0 +1,12 @@
+{
+  "title": "Guida",
+  "subtitle": "Che cosa misura Sinapsi e come leggere i grafici, spiegato senza dare nulla per scontato.",
+  "search": "Cerca nella guida",
+  "searchPlaceholder": "Cerca, es. «tendenza»",
+  "contents": "Indice",
+  "references": "Riferimenti",
+  "bibliography": "Bibliografia completa",
+  "bibliographyIntro": "Gli articoli scientifici su cui si basano i metodi descritti. I collegamenti si aprono in una nuova scheda sul sito dell'editore.",
+  "noResults": "Nessuna sezione contiene «{q}».",
+  "newTab": "(si apre in una nuova scheda)"
+}

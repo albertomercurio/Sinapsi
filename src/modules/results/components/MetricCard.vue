@@ -4,13 +4,15 @@ import { useI18n } from 'vue-i18n'
 import type { MetricDescriptor } from '@/modules/activities/types'
 import ChartCard from './ChartCard.vue'
 import TrendBadge from './TrendBadge.vue'
+import InfoTip from '@/shared/components/InfoTip.vue'
+import { metricGuideSection } from '@/modules/guide/sections'
 import MetricChart from '../charts/MetricChart.vue'
 import { analyzeMetric, type MetricPoint } from '../analysis'
 import { formatMetric, metricLabelKey } from '../format'
 
 const props = defineProps<{ metric: MetricDescriptor; points: MetricPoint[]; seed: string }>()
 const emit = defineEmits<{ open: [runId: string] }>()
-const { t, n, d } = useI18n()
+const { t, n, d, te } = useI18n()
 const analysis = computed(() => analyzeMetric(props.points, props.metric.polarity, props.seed))
 const label = computed(() => t(metricLabelKey(props.metric)))
 const fmt = (v: number) => formatMetric(v, props.metric.unit, n as never, t)
@@ -25,10 +27,19 @@ const signed = (v: number) => `${v >= 0 ? '+' : '−'}${fmt(Math.abs(v))}`
 <template>
   <ChartCard
     :title="label"
+    :help="
+      te(`metricsHelp.${metric.key}`)
+        ? `${t(`metricsHelp.${metric.key}`)} ${t('help.metricChart')}`
+        : t('help.metricChart')
+    "
+    :guide="metricGuideSection(metric.key) ?? 'trends'"
     :subtitle="points.length ? t('results.lastValue', { v: fmt(points.at(-1)!.y) }) : undefined"
   >
     <template v-if="metric.polarity !== 0" #badge
-      ><TrendBadge :direction="analysis.trend.direction"
+      ><TrendBadge :direction="analysis.trend.direction" /><InfoTip
+        :text="t('help.trend')"
+        :label="t('results.trendLabel')"
+        guide="trends"
     /></template>
     <MetricChart
       v-if="points.length"
@@ -57,20 +68,32 @@ const signed = (v: number) => `${v >= 0 ? '+' : '−'}${fmt(Math.abs(v))}`
     <template #footer>
       <dl v-if="slope30 || analysis.change" class="text-muted-foreground mt-2 grid gap-1 text-xs">
         <div v-if="slope30" class="flex justify-between gap-2">
-          <dt>{{ t('results.slope30') }}</dt>
+          <dt class="flex items-center gap-1">
+            {{ t('results.slope30') }}<InfoTip :text="t('help.slope30')" guide="trends" />
+          </dt>
           <dd class="tabular-nums">
             {{ signed(slope30.v) }}
             <span class="opacity-70"
-              >(IC 95% {{ signed(slope30.lo) }} … {{ signed(slope30.hi) }})</span
+              >({{
+                t('results.likelyRange', { lo: signed(slope30.lo), hi: signed(slope30.hi) })
+              }})</span
             >
           </dd>
         </div>
         <div v-if="analysis.change" class="flex justify-between gap-2">
-          <dt>{{ t('results.changeFromBaseline') }}</dt>
+          <dt class="flex items-center gap-1">
+            {{ t('results.changeFromBaseline')
+            }}<InfoTip :text="t('help.changeFromBaseline')" guide="trends" />
+          </dt>
           <dd class="tabular-nums">
             {{ signed(analysis.change.diff) }}
             <span class="opacity-70"
-              >(IC 95% {{ signed(analysis.change.lo) }} … {{ signed(analysis.change.hi) }})</span
+              >({{
+                t('results.likelyRange', {
+                  lo: signed(analysis.change.lo),
+                  hi: signed(analysis.change.hi),
+                })
+              }})</span
             >
           </dd>
         </div>

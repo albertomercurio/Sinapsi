@@ -2,8 +2,9 @@
  * Supported interface languages.
  *
  * To add a language: add an entry here, then add `<code>.json` next to every
- * existing `it.json` (run `pnpm i18n:check` to find missing files/keys) and a
- * content pack in `src/content/<code>/`. See docs/adding-a-language.md.
+ * existing `it.json` (run `pnpm i18n:check` to find missing files/keys), a
+ * content pack in `src/content/<code>/` and the guide text in
+ * `src/modules/guide/content/<code>.ts`. See docs/adding-a-language.md.
  */
 export const SUPPORTED_LOCALES = [
   { code: 'it', label: 'Italiano', intl: 'it-IT' },

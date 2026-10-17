@@ -29,12 +29,14 @@
 |---|---|---|---|
 | Accesso non autorizzato da credenziali rubate | Media / alta | 2FA obbligatoria imposta dal database; password ≥ 12 caratteri; logout per inattività | Basso |
 | Accesso di un utente ai pazienti di un altro studio | Bassa / alta | RLS per studio, test automatici (pgTAP) | Molto basso |
-| Re-identificazione dei pazienti | Bassa / alta | Codici generati; nessun dato diretto; avvisi sui campi note | Basso |
-| Accesso del fornitore tecnico/amministratore ai dati | Bassa / media | Nessun accesso applicativo per l'admin; accordo art. 28; riservatezza; audit | Basso |
+| Re-identificazione dei pazienti | Bassa / alta | Codici generati; nomi cifrati end-to-end (chiave solo sui dispositivi dello studio); nessun altro dato diretto; avvisi sui campi note | Basso |
+| Accesso del fornitore tecnico/amministratore ai dati | Bassa / media | Nessun accesso applicativo per l'admin; nomi illeggibili per l'admin; operazioni sugli account registrate e visibili al titolare; accordo art. 28; riservatezza | Basso |
 | Accesso di autorità di paesi terzi tramite fornitori statunitensi | Bassa / media | Dati nell'UE, SCC/DPF, pseudonimizzazione, cifratura | Basso |
-| Perdita di dati (assenza di backup automatici nel piano gratuito) | Media / media | Backup cifrati periodici con promemoria; backup tecnici dell'amministratore | Basso |
+| Perdita di dati (assenza di backup automatici nel piano gratuito) | Media / media | Backup quotidiani automatici cifrati dell'amministratore (chiave privata offline); copie mensili cifrate del titolare | Basso |
 | Paziente che esce dalla modalità esercizi e vede altri dati | Media / media | Modalità paziente bloccata con PIN, logout per inattività | Basso |
 | Esposizione nel browser (script di terze parti) | Bassa / alta | Nessuna terza parte, CSP restrittiva | Molto basso |
+
+| Perdita della frase segreta dei nomi | Bassa / media | Frase conservata dal titolare; i codici e i dati clinici restano; i nomi si possono reinserire | Basso |
 
 ## 4. Esito
 

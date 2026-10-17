@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
-import { Archive, ArchiveRestore, CalendarPlus, Download, Pencil, Trash2 } from '@lucide/vue'
+import { Archive, ArchiveRestore, CalendarPlus, Download, Lock, Pencil, Trash2 } from '@lucide/vue'
 import { Button } from '@/shared/ui/button'
 import { Badge } from '@/shared/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card'
@@ -20,6 +20,8 @@ import { exportPatientData, useDeletePatient, usePatient, useUpdatePatient } fro
 import { patientAge, patientAgeGroup } from '../helpers'
 import PatientFormDialog from '../components/PatientFormDialog.vue'
 import ConditionsEditor from '../components/ConditionsEditor.vue'
+import UnlockNamesDialog from '../names/UnlockNamesDialog.vue'
+import { useNamesStore } from '../names/store'
 
 const { t, d } = useI18n()
 const route = useRoute()
@@ -34,6 +36,12 @@ const editOpen = ref(false)
 const deleteOpen = ref(false)
 
 const isOwner = computed(() => auth.currentMembership?.role === 'owner')
+const names = useNamesStore()
+const unlockOpen = ref(false)
+watchEffect(() => {
+  if (patient.value && names.status === 'unlocked') void names.decryptAll([patient.value])
+})
+const fullName = computed(() => names.label(patient.value))
 
 async function toggleArchive() {
   if (!patient.value) return
@@ -51,7 +59,7 @@ async function toggleArchive() {
 async function exportData() {
   if (!patient.value) return
   try {
-    const doc = await exportPatientData(patient.value)
+    const doc = await exportPatientData(patient.value, names.nameOf(patient.value))
     downloadJson(doc, `sinapsi-${patient.value.code}-${new Date().toISOString().slice(0, 10)}.json`)
   } catch (e) {
     toast.error(t(errorKey(e)))
@@ -79,9 +87,23 @@ async function confirmDelete() {
     <header class="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
         <p class="text-muted-foreground text-sm">{{ t('patients.patient') }}</p>
-        <h1 class="font-mono text-3xl font-bold tracking-tight" data-testid="patient-code">
-          {{ patient.code }}
+        <h1 v-if="fullName" class="text-3xl font-bold tracking-tight" data-testid="patient-name">
+          {{ fullName }}
         </h1>
+        <p
+          class="font-mono font-bold tracking-tight"
+          :class="fullName ? 'text-muted-foreground text-base' : 'text-3xl'"
+          data-testid="patient-code"
+        >
+          {{ patient.code }}
+          <button
+            v-if="names.status === 'locked' && patient.name_enc"
+            class="text-muted-foreground hover:text-foreground ml-2 inline-flex items-center gap-1 align-middle font-sans text-xs font-normal"
+            @click="unlockOpen = true"
+          >
+            <Lock class="size-3.5" /> {{ t('patients.names.showName') }}
+          </button>
+        </p>
         <div class="text-muted-foreground mt-2 flex flex-wrap items-center gap-2 text-sm">
           <span v-if="patientAge(patient) !== null">{{
             t('patients.ageYears', { n: patientAge(patient) })
@@ -202,6 +224,7 @@ async function confirmDelete() {
     </Tabs>
 
     <PatientFormDialog v-model:open="editOpen" :patient="patient" />
+    <UnlockNamesDialog v-model:open="unlockOpen" />
     <ConfirmDialog
       v-model:open="deleteOpen"
       :title="t('patients.privacy.deleteConfirmTitle', { code: patient.code })"

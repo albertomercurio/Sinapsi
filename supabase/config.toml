@@ -173,7 +173,7 @@ enable_refresh_token_rotation = true
 # Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.
 # Requires enable_refresh_token_rotation = true.
 refresh_token_reuse_interval = 10
-# Sinapsi is invite-only: accounts are created by the admin-invite Edge Function.
+# Sinapsi is invite-only: accounts are created by the admin-accounts Edge Function.
 enable_signup = false
 # Allow/disallow anonymous sign-ins to your project.
 enable_anonymous_sign_ins = false
@@ -232,8 +232,8 @@ secure_password_change = true
 max_frequency = "1s"
 # Number of characters used in the email OTP.
 otp_length = 6
-# Number of seconds before the email OTP expires (defaults to 1 hour).
-otp_expiry = 3600
+# Invitation and password links stay valid 24 h (they may be delivered by WhatsApp, not instantly).
+otp_expiry = 86400
 
 # Use a production-ready SMTP server
 # [auth.email.smtp]
@@ -419,6 +419,6 @@ enabled = true
 # and column/key alignment. Set to "null" to emit raw, unformatted SQL.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":180,\"commaStyle\":\"trailing\"}"
 
-[functions.admin-invite]
+[functions.admin-accounts]
 enabled = true
 verify_jwt = true

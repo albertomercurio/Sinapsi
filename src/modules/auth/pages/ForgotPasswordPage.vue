@@ -46,9 +46,12 @@ async function submit() {
         {{ t('auth.sendLink') }}
       </Button>
     </form>
+    <p class="text-muted-foreground mt-6 text-xs leading-relaxed">
+      {{ t('auth.forgotAlternative') }}
+    </p>
     <RouterLink
       :to="{ name: 'login' }"
-      class="text-primary mt-6 inline-block text-sm hover:underline"
+      class="text-primary mt-4 inline-block text-sm hover:underline"
     >
       {{ t('auth.backToLogin') }}
     </RouterLink>

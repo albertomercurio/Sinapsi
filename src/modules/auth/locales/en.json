@@ -44,5 +44,6 @@
   "forgotSent": "If the address is registered, you'll shortly receive an email with the link.",
   "sendLink": "Send link",
   "noOrgTitle": "No practice linked",
-  "noOrgSubtitle": "Your account is not part of a practice yet. Contact the platform administrator."
+  "noOrgSubtitle": "Your account is not part of a practice yet. Contact the platform administrator.",
+  "forgotAlternative": "If email sending is configured you'll receive a link. Otherwise ask the platform administrator for a new-password link: they can also send it to you on WhatsApp."
 }

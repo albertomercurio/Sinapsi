@@ -10,6 +10,7 @@ import { supabase } from '@/shared/api/supabase'
 import { errorKey, unwrap } from '@/shared/api/errors'
 import { useAuthStore } from '@/modules/auth/store'
 import MembersTable from '@/modules/admin/components/MembersTable.vue'
+import NamesKeyCard from '@/modules/patients/names/NamesKeyCard.vue'
 
 const { t } = useI18n()
 const auth = useAuthStore()
@@ -97,6 +98,7 @@ async function save() {
         </div>
       </CardContent>
     </Card>
+    <NamesKeyCard />
     <Card>
       <CardHeader>
         <CardTitle>{{ t('settings.membersTitle') }}</CardTitle>

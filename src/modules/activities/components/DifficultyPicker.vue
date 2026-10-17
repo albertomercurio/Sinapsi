@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Slider } from '@/shared/ui/slider'
+import InfoTip from '@/shared/components/InfoTip.vue'
 
 /** null = adaptive; otherwise a fixed difficulty on the 1–5 scale. */
 const model = defineModel<number | null>({ default: null })
@@ -51,5 +52,10 @@ const value = computed({
         t('common.level', { n: (model ?? 2).toFixed(1).replace('.0', '') })
       }}</span>
     </div>
+    <InfoTip
+      :text="`${t('help.difficulty')} ${t('help.levels')}`"
+      :label="t('common.difficulty')"
+      guide="ability"
+    />
   </div>
 </template>

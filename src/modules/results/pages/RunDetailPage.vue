@@ -19,6 +19,8 @@ import { useDeleteRun, usePinRunEvents, useRun, useRunEvents } from '../api'
 import TrialsChart from '../charts/TrialsChart.vue'
 import RtDistributionChart from '../charts/RtDistributionChart.vue'
 import ReplayView from '../components/ReplayView.vue'
+import PatientLabel from '@/modules/patients/names/PatientLabel.vue'
+import InfoTip from '@/shared/components/InfoTip.vue'
 
 const { t, d, n } = useI18n()
 const route = useRoute()
@@ -87,7 +89,7 @@ async function confirmDelete() {
           })
         "
       >
-        <ArrowLeft /> <span class="font-mono">{{ patient?.code }}</span>
+        <ArrowLeft /> <PatientLabel :patient="patient" />
       </Button>
       <Button
         v-if="auth.currentMembership?.role === 'owner'"
@@ -133,7 +135,9 @@ async function confirmDelete() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>{{ t('results.rawTitle') }}</CardTitle>
+          <CardTitle class="flex items-center gap-1"
+            >{{ t('results.rawTitle') }}<InfoTip :text="t('help.rawEvents')" guide="quality"
+          /></CardTitle>
           <CardDescription>
             <template v-if="events">{{
               events.pinned
@@ -172,8 +176,10 @@ async function confirmDelete() {
     <template v-if="events">
       <Card v-if="spatial">
         <CardHeader
-          ><CardTitle>{{ t('results.replayTitle') }}</CardTitle></CardHeader
-        >
+          ><CardTitle class="flex items-center gap-1"
+            >{{ t('results.replayTitle')
+            }}<InfoTip :text="t('help.replay')" guide="visual-search" /></CardTitle
+        ></CardHeader>
         <CardContent
           ><ReplayView
             :run="run"
@@ -184,7 +190,9 @@ async function confirmDelete() {
       <div v-else-if="rts.length >= 5" class="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader
-            ><CardTitle>{{ t('results.trialsTitle') }}</CardTitle
+            ><CardTitle class="flex items-center gap-1"
+              >{{ t('results.trialsTitle')
+              }}<InfoTip :text="t('help.trialsChart')" guide="reaction-times" /></CardTitle
             ><CardDescription>{{ t('results.trialsSubtitle') }}</CardDescription></CardHeader
           >
           <CardContent
@@ -193,7 +201,9 @@ async function confirmDelete() {
         </Card>
         <Card>
           <CardHeader
-            ><CardTitle>{{ t('results.distributionTitle') }}</CardTitle
+            ><CardTitle class="flex items-center gap-1"
+              >{{ t('results.distributionTitle')
+              }}<InfoTip :text="t('help.distributionChart')" guide="rt-distribution" /></CardTitle
             ><CardDescription>{{ t('results.distributionSubtitle') }}</CardDescription></CardHeader
           >
           <CardContent

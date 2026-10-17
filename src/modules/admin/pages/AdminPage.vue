@@ -22,6 +22,8 @@ import PageHeader from '@/shared/components/PageHeader.vue'
 import { errorKey } from '@/shared/api/errors'
 import { useAdminOverview, useAdminStorage, useInvite } from '../api'
 import MembersTable from '../components/MembersTable.vue'
+import DeliveryChoice from '../components/DeliveryChoice.vue'
+import LinkDialog from '../components/LinkDialog.vue'
 
 const { t, n, d, te } = useI18n()
 const { data: orgs } = useAdminOverview()
@@ -36,18 +38,28 @@ const mb = (b: number) => `${n(b / 1024 / 1024, 'decimal1')} MB`
 
 const createOpen = ref(false)
 const newOrg = ref({ name: '', email: '' })
+const delivery = ref<'link' | 'email'>('link')
+const createdLink = ref<string | null>(null)
+const createdEmail = ref('')
+const linkOpen = ref(false)
 const manageOrg = ref<{ id: string; name: string } | null>(null)
 const manageOpen = ref(false)
 
 async function createOrg() {
   try {
-    await inviteM.mutateAsync({
+    const res = await inviteM.mutateAsync({
       email: newOrg.value.email.trim(),
       newOrgName: newOrg.value.name.trim(),
       role: 'owner',
+      delivery: delivery.value,
     })
     toast.success(t('admin.orgCreated', { name: newOrg.value.name }))
     createOpen.value = false
+    if (res.link) {
+      createdLink.value = res.link
+      createdEmail.value = newOrg.value.email.trim()
+      linkOpen.value = true
+    }
     newOrg.value = { name: '', email: '' }
   } catch (e) {
     const code = (e as { code?: string }).code ?? ''
@@ -168,6 +180,14 @@ async function createOrg() {
               data-testid="new-org-email"
             />
           </div>
+          <div class="grid gap-2">
+            <DeliveryChoice v-model="delivery" />
+            <p class="text-muted-foreground text-xs">
+              {{
+                delivery === 'link' ? t('admin.delivery.linkHelp') : t('admin.delivery.emailHelp')
+              }}
+            </p>
+          </div>
           <Alert variant="warning"
             ><AlertDescription>{{ t('admin.dpaReminder') }}</AlertDescription></Alert
           >
@@ -182,6 +202,8 @@ async function createOrg() {
         </form>
       </DialogContent>
     </Dialog>
+
+    <LinkDialog v-model:open="linkOpen" :link="createdLink" kind="invite" :email="createdEmail" />
 
     <Dialog v-model:open="manageOpen">
       <DialogContent class="sm:max-w-3xl">

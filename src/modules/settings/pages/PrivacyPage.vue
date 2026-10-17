@@ -45,7 +45,7 @@ async function exportBackup() {
   busy.value = true
   try {
     const doc = await collectOrgData(
-      { id: m.org_id, name: m.org_name },
+      { id: m.org_id, name: m.org_name, name_key: m.name_key },
       (tbl) => (step.value = tbl),
     )
     step.value = 'encrypt'

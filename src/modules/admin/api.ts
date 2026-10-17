@@ -9,26 +9,39 @@ export interface InviteInput {
   orgId?: string
   newOrgName?: string
   role: 'owner' | 'therapist'
+  /** 'link' = return a one-time link to deliver personally; 'email' = send it (needs SMTP). */
+  delivery: 'link' | 'email'
 }
 
-/** Calls the admin-invite Edge Function, pinned to Frankfurt. */
-export async function invite(
-  input: InviteInput,
-): Promise<{ ok: boolean; existing: boolean; orgId: string }> {
-  const { data, error } = await supabase.functions.invoke('admin-invite', {
-    body: input,
+export interface AccountResult {
+  ok: boolean
+  existing?: boolean
+  orgId?: string
+  /** One-time link (24 h) to deliver personally, when requested. */
+  link?: string | null
+  removed?: number
+}
+
+/** Calls the admin-accounts Edge Function, pinned to Frankfurt. */
+async function callAccounts(body: Record<string, unknown>): Promise<AccountResult> {
+  const { data, error } = await supabase.functions.invoke('admin-accounts', {
+    body,
     region: FunctionRegion.EuCentral1,
   })
   if (error) {
     let code = 'invite_failed'
     if (error instanceof FunctionsHttpError) {
-      const body = await error.context.json().catch(() => ({}))
-      code = body.error ?? code
+      const res = await error.context.json().catch(() => ({}))
+      code = res.error ?? code
     }
     throw Object.assign(new Error(code), { code: `invite.${code}` })
   }
   return data
 }
+
+export const invite = (input: InviteInput) => callAccounts({ action: 'invite', ...input })
+export const passwordLink = (userId: string) => callAccounts({ action: 'password_link', userId })
+export const resetMfa = (userId: string) => callAccounts({ action: 'reset_mfa', userId })
 
 export function useOrgMembers(orgId: MaybeRefOrGetter<string | null>) {
   return useQuery({
@@ -93,5 +106,17 @@ export function useAdminStorage() {
           runs: number
         }[]
       )[0] ?? null,
+  })
+}
+
+export function usePasswordLink() {
+  return useMutation({ mutationFn: passwordLink })
+}
+
+export function useResetMfa() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: resetMfa,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['members'] }),
   })
 }

@@ -24,7 +24,8 @@ export interface BackupDoc {
   format: 'sinapsi-backup'
   version: 1
   created_at: string
-  org: { id: string; name: string }
+  /** name_key = public parameters of the names passphrase (never the key itself). */
+  org: { id: string; name: string; name_key?: unknown }
   tables: Record<BackupTable, Record<string, unknown>[]>
 }
 
@@ -130,7 +131,7 @@ async function fetchAll(table: BackupTable, orgId: string): Promise<Record<strin
 }
 
 export async function collectOrgData(
-  org: { id: string; name: string },
+  org: BackupDoc['org'],
   onProgress?: (t: BackupTable) => void,
 ): Promise<BackupDoc> {
   const tables = {} as BackupDoc['tables']
@@ -150,6 +151,16 @@ export async function restoreBackup(
   const total = BACKUP_TABLES.reduce((s, t) => s + (doc.tables[t]?.length ?? 0), 0)
   let done = 0
   let inserted = 0
+  // Encrypted names stay readable with the original passphrase.
+  if (doc.org.name_key) {
+    unwrap(
+      await supabase.rpc('restore_rows', {
+        p_org: orgId,
+        p_table: 'organization_name_key',
+        p_rows: [{ name_key: doc.org.name_key }] as never,
+      }),
+    )
+  }
   for (const t of BACKUP_TABLES) {
     const rows = doc.tables[t] ?? []
     const size = t === 'activity_run_events' ? 25 : 200

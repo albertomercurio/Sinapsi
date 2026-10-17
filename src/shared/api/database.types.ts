@@ -250,6 +250,7 @@ export type Database = {
           id: string
           idle_timeout_min: number
           name: string
+          name_key: Json | null
           patient_code_prefix: string
           raw_retention_months: number
           updated_at: string
@@ -260,6 +261,7 @@ export type Database = {
           id?: string
           idle_timeout_min?: number
           name: string
+          name_key?: Json | null
           patient_code_prefix?: string
           raw_retention_months?: number
           updated_at?: string
@@ -269,6 +271,7 @@ export type Database = {
           id?: string
           idle_timeout_min?: number
           name?: string
+          name_key?: Json | null
           patient_code_prefix?: string
           raw_retention_months?: number
           updated_at?: string
@@ -390,6 +393,7 @@ export type Database = {
           education_years: number | null
           handedness: string | null
           id: string
+          name_enc: string | null
           notes: string | null
           org_id: string
           sex: string | null
@@ -408,6 +412,7 @@ export type Database = {
           education_years?: number | null
           handedness?: string | null
           id?: string
+          name_enc?: string | null
           notes?: string | null
           org_id: string
           sex?: string | null
@@ -425,6 +430,7 @@ export type Database = {
           education_years?: number | null
           handedness?: string | null
           id?: string
+          name_enc?: string | null
           notes?: string | null
           org_id?: string
           sex?: string | null
@@ -718,7 +724,12 @@ export type Database = {
         Args: { p_ability?: Json; p_events?: string; p_run: Json }
         Returns: string
       }
+      rekey_patient_names: {
+        Args: { p_name_key: Json; p_names: Json; p_org: string }
+        Returns: number
+      }
       replace_session_items: { Args: { p_items: Json; p_session: string }; Returns: undefined }
+      reset_patient_names: { Args: { p_org: string }; Returns: number }
       restore_rows: { Args: { p_org: string; p_rows: Json; p_table: string }; Returns: number }
     }
     Enums: {

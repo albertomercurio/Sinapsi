@@ -243,7 +243,7 @@ create policy owner_update on public.organizations for update to authenticated
 create policy admin_delete on public.organizations for delete to authenticated
   using ((select app.is_platform_admin()));
 
--- memberships (creation happens in the admin-invite Edge Function or by admins)
+-- memberships (creation happens in the admin-accounts Edge Function or by admins)
 create policy member_read on public.memberships for select to authenticated
   using (org_id = any ((select app.my_org_ids())::uuid[]) or (select app.is_platform_admin()));
 create policy admin_insert on public.memberships for insert to authenticated

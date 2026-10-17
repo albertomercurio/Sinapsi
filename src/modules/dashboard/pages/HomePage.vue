@@ -34,7 +34,7 @@ const showBackup = computed(
   () =>
     auth.currentMembership?.role === 'owner' &&
     (patients.value?.length ?? 0) > 0 &&
-    backupOverdue(auth.currentOrgId!),
+    backupOverdue(auth.currentOrgId!, 30),
 )
 const greeting = computed(() => {
   const h = new Date().getHours()
