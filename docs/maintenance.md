@@ -47,9 +47,9 @@ backed up. Most of it is automatic; the manual part is about 15 minutes a month.
    gone).
 8. Open the site and check the changed screen.
 
-**Something broke?** In Cloudflare, go to *Workers & Pages → sinapsi → Deployments*, open the
-previous deployment and choose *Rollback to this deployment*; it is instant. Database migrations are
-not undone by a rollback. Fix forward with a new migration, or restore from a backup (below).
+**Something broke?** In Cloudflare, open *Workers & Pages → sinapsi → Deployments* and roll back to
+the previous version; it is instant. Database migrations are not undone by a rollback. Fix forward
+with a new migration, or restore from a backup (below).
 
 **Production auth settings live in the Supabase dashboard**, not in `supabase/config.toml`; that
 file only configures the local stack. If you change sign-in settings locally, repeat the change in

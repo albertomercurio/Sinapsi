@@ -3,7 +3,7 @@
 ## Overview
 
 ```
-Browser (static SPA, Cloudflare)  ──HTTPS──▶  Supabase, eu-central-1 (Frankfurt)
+Browser (static SPA, Cloudflare)  ──HTTPS──▶  Supabase, eu-west-1 (Ireland)
   Vue 3 + Vite                                 ├─ Postgres: tables, RLS, RPCs, audit, pg_cron
   vue-i18n (precompiled)                       ├─ Auth: email + password, TOTP MFA, invites
   ECharts (lazy)                               ├─ Data API (PostgREST): explicit grants only
@@ -11,7 +11,7 @@ Browser (static SPA, Cloudflare)  ──HTTPS──▶  Supabase, eu-central-1 (
 ```
 
 The static host only serves files. Every request carrying personal or health data goes from the
-browser straight to Supabase in Frankfurt (the CSP `connect-src` allows nothing else).
+browser straight to Supabase in the EU (the CSP `connect-src` allows nothing else).
 
 ## Repository layout
 
@@ -56,7 +56,7 @@ automatically under the `<id>.` namespace.
 | Child rows | `org_id` is inherited from the parent by triggers — a client can never choose it. |
 | Destructive actions | Patient hard delete: owners only, must retype the code (`delete_patient`). Runs are immutable. |
 | Audit | `audit_log` is append-only (no grants), filled by triggers (column names only, never values) and by `log_event` for exports/backups/prints. |
-| Edge Function | `admin-accounts` (invite, password link, 2FA reset) verifies the JWT, requires `aal2`, checks platform-admin/owner role, then uses the service role. Invoke with `region: eu-central-1`. |
+| Edge Function | `admin-accounts` (invite, password link, 2FA reset) verifies the JWT, requires `aal2`, checks platform-admin/owner role, then uses the service role. The app invokes it pinned to the project region (`VITE_SUPABASE_REGION`, default `eu-west-1`). |
 | Browser | Strict CSP (`script-src 'self'`, `style-src 'self'`, no eval thanks to precompiled i18n), HSTS, no referrer, no third-party requests, idle logout, patient-mode PIN lock. |
 
 The pgTAP suite (`pnpm test:db`) proves these rules (51 assertions).

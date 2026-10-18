@@ -45,5 +45,6 @@
   "sendLink": "Invia il link",
   "noOrgTitle": "Nessuno studio associato",
   "noOrgSubtitle": "Il tuo account non fa ancora parte di uno studio. Contatta l'amministratore della piattaforma.",
-  "forgotAlternative": "Se hai attivato l'invio delle email, riceverai un link. In alternativa chiedi all'amministratore della piattaforma un link per scegliere una nuova password."
+  "forgotAlternative": "Se hai attivato l'invio delle email, riceverai un link. In alternativa chiedi all'amministratore della piattaforma un link per scegliere una nuova password.",
+  "forgotNoEmail": "Chiedi all'amministratore della piattaforma un link per scegliere una nuova password: è valido 24 ore e si usa una sola volta. Per entrare servirà comunque il codice della tua app di autenticazione."
 }

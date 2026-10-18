@@ -13,7 +13,7 @@
 | Interessati | Pazienti adulti e minori |
 | Categorie di dati | Codice pseudonimo, nome e cognome (facoltativi, cifrati end-to-end), anno di nascita, sesso, scolarità, lateralità, categorie diagnostiche, note cliniche, sedute, risultati e registrazioni degli esercizi (dati relativi alla salute) |
 | Destinatari | Professionisti autorizzati dello studio; responsabile del trattamento (amministratore della piattaforma) e suoi sub-responsabili |
-| Trasferimenti extra UE | Dati ospitati nell'UE (Francoforte). Possibili accessi di supporto da paesi terzi da parte dei fornitori, coperti da SCC/DPF (vedi sub-responsabili.md) |
+| Trasferimenti extra UE | Dati ospitati nell'UE (Irlanda). Possibili accessi di supporto da paesi terzi da parte dei fornitori, coperti da SCC/DPF (vedi sub-responsabili.md) |
 | Conservazione | Vedi conservazione.md |
 | Misure di sicurezza | Pseudonimizzazione, cifratura end-to-end dei nomi, 2FA, RLS per studio, cifratura, audit log, backup cifrati, logout per inattività (vedi README) |
 | Data dell'ultimo aggiornamento | [ … ] |

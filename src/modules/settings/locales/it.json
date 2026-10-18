@@ -61,7 +61,7 @@
   },
   "dataTitle": "Quali dati conserva Sinapsi",
   "dataStored": "Per ogni paziente: un codice generato, anno di nascita, sesso, anni di scolarità, lateralità, condizioni cliniche per categoria, sedute, risultati e registrazioni dettagliate degli esercizi. Nessun nome, codice fiscale o data di nascita completa.",
-  "dataWhere": "I dati sono ospitati nell'Unione Europea (Francoforte) e cifrati in transito e a riposo. L'accesso richiede password e secondo fattore.",
+  "dataWhere": "I dati sono ospitati nell'Unione Europea (Irlanda) e cifrati in transito e a riposo. L'accesso richiede password e secondo fattore.",
   "dataRetention": "Le registrazioni dettagliate vengono cancellate automaticamente dopo {n} mesi; le misure riassuntive restano finché il paziente non viene eliminato.",
   "audit": {
     "help": "Ogni creazione, modifica, eliminazione, esportazione e ripristino viene registrato. Il registro non può essere modificato.",

@@ -65,7 +65,7 @@ jobs:
       - name: Write .env.local for the local stack
         run: |
           eval "$(pnpm exec supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY)=')"
-          printf 'VITE_SUPABASE_URL=%s\nVITE_SUPABASE_PUBLISHABLE_KEY=%s\n' "$API_URL" "$PUBLISHABLE_KEY" > .env.local
+          printf 'VITE_SUPABASE_URL=%s\nVITE_SUPABASE_PUBLISHABLE_KEY=%s\nVITE_EMAIL_ENABLED=true\n' "$API_URL" "$PUBLISHABLE_KEY" > .env.local
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
         env:

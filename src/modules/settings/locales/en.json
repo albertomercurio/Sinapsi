@@ -61,7 +61,7 @@
   },
   "dataTitle": "What data Sinapsi keeps",
   "dataStored": "For each patient: a generated code, year of birth, sex, years of schooling, handedness, clinical conditions by category, sessions, results and detailed exercise recordings. No names, tax codes or full dates of birth.",
-  "dataWhere": "Data is hosted in the European Union (Frankfurt) and encrypted in transit and at rest. Access requires a password and a second factor.",
+  "dataWhere": "Data is hosted in the European Union (Ireland) and encrypted in transit and at rest. Access requires a password and a second factor.",
   "dataRetention": "Detailed recordings are deleted automatically after {n} months; summary measures are kept until the patient is deleted.",
   "audit": {
     "help": "Every creation, change, deletion, export and restore is logged. The log cannot be modified.",

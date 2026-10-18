@@ -45,5 +45,6 @@
   "sendLink": "Send link",
   "noOrgTitle": "No practice linked",
   "noOrgSubtitle": "Your account is not part of a practice yet. Contact the platform administrator.",
-  "forgotAlternative": "If email sending is configured you'll receive a link. Otherwise ask the platform administrator for a new-password link."
+  "forgotAlternative": "If email sending is configured you'll receive a link. Otherwise ask the platform administrator for a new-password link.",
+  "forgotNoEmail": "Ask the platform administrator for a link to choose a new password: it is valid for 24 hours and works once. You will still need the code from your authenticator app to sign in."
 }

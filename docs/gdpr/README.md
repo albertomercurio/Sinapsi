@@ -10,7 +10,7 @@
 |---|---|
 | Lo studio / il professionista che usa Sinapsi con i propri pazienti | **Titolare del trattamento** (art. 4.7) |
 | L'amministratore della piattaforma (gestisce gli account Supabase, Cloudflare, GitHub) | **Responsabile del trattamento** (art. 28) |
-| Supabase (database e autenticazione, Francoforte), Cloudflare (file statici), Brevo (email di invito/reset, solo se attivate) | **Sub-responsabili** dell'amministratore |
+| Supabase (database e autenticazione, Irlanda), Cloudflare (file statici), Brevo (email di invito/reset, solo se attivate) | **Sub-responsabili** dell'amministratore |
 
 Ogni studio che usa la piattaforma è un titolare distinto: serve un accordo art. 28 per ciascuno.
 
@@ -33,7 +33,7 @@ Ogni studio che usa la piattaforma è un titolare distinto: serve un accordo art
   ricavata dalla frase segreta dello studio, che non lascia mai i dispositivi dei terapisti. Il
   database, Supabase e l'amministratore vedono solo testo cifrato.
 - Minimizzazione: solo anno di nascita, sesso, scolarità, lateralità, categorie cliniche.
-- Dati ospitati nell'UE (Francoforte), cifrati in transito (TLS) e a riposo.
+- Dati ospitati nell'UE (Irlanda), cifrati in transito (TLS) e a riposo.
 - Autenticazione a due fattori obbligatoria, imposta dal database; disconnessione per inattività.
 - Controllo degli accessi per studio (Row Level Security); l'amministratore della piattaforma non
   ha accesso applicativo ai dati clinici.

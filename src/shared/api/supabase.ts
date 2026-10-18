@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, type FunctionRegion } from '@supabase/supabase-js'
 import type { Database } from './database.types'
 
 const url = import.meta.env.VITE_SUPABASE_URL
@@ -22,5 +22,15 @@ export const supabase = createClient<Database>(url ?? 'http://localhost:54321', 
     detectSessionInUrl: false,
   },
 })
+
+/** Region of the Supabase project (dashboard → Project settings → General); Edge Functions run there. */
+export const SUPABASE_REGION = (import.meta.env.VITE_SUPABASE_REGION ||
+  'eu-west-1') as FunctionRegion
+
+/**
+ * Whether Supabase can send e-mails (custom SMTP configured). When it cannot,
+ * the admin copies one-time links and delivers them personally.
+ */
+export const EMAIL_ENABLED = import.meta.env.VITE_EMAIL_ENABLED === 'true'
 
 export type { Database }

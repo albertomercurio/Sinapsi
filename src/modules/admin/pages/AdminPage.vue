@@ -23,6 +23,7 @@ import { errorKey } from '@/shared/api/errors'
 import { useAdminOverview, useAdminStorage, useInvite } from '../api'
 import MembersTable from '../components/MembersTable.vue'
 import DeliveryChoice from '../components/DeliveryChoice.vue'
+import { EMAIL_ENABLED } from '@/shared/api/supabase'
 import LinkDialog from '../components/LinkDialog.vue'
 
 const { t, n, d, te } = useI18n()
@@ -181,7 +182,7 @@ async function createOrg() {
             />
           </div>
           <div class="grid gap-2">
-            <DeliveryChoice v-model="delivery" />
+            <DeliveryChoice v-if="EMAIL_ENABLED" v-model="delivery" />
             <p class="text-muted-foreground text-xs">
               {{
                 delivery === 'link' ? t('admin.delivery.linkHelp') : t('admin.delivery.emailHelp')

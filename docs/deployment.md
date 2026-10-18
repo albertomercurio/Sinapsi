@@ -1,16 +1,19 @@
-# Deployment (Supabase Free in Frankfurt + Cloudflare)
+# Deployment (Supabase Free in the EU + Cloudflare)
 
 Cost: €0/month on the free tiers. All accounts below are owned by the **platform admin**, who is
 the GDPR *processor* for each practice (see `docs/gdpr/`). Turn on 2FA on **every** account.
 After go-live, see [maintenance.md](maintenance.md) for updates, accounts, backups and incidents.
+
+Order: Supabase project (§1.1–1.2) → Cloudflare (§2) → back to Supabase for the site address and the
+rest of §1. Each side needs something from the other.
 
 ## 0. A preview first (fake patients only)
 
 There is no separate "demo" hosting: a preview **is** the production setup, used with invented
 patients until the go-live checklist at the end is complete.
 
-1. Do sections 1–3 below (about an hour). You can skip SMTP (§1.8) and leave backups (§4) for later.
-2. Create her practice and send her the activation link (§1.11).
+1. Do sections 1–3 below (about an hour). Leave backups (§4) for later.
+2. Create her practice and send her the activation link (§1.10).
 3. Before she starts, she needs an authenticator app on her phone (Google Authenticator, Microsoft
    Authenticator, 2FAS, Aegis…). Ask her to use only invented patients (write "paziente di prova" in the
    notes field) and no real names.
@@ -33,27 +36,34 @@ pnpm dev
 
 ## 1. Supabase (database, auth, edge function)
 
-1. Create an account (2FA on) and a project on the **Free** plan, region **Central EU (Frankfurt)**
-   — `eu-central-1`, *not* the generic "Europe" option, which may place it in London or Zurich.
-2. Download the DPA: supabase.com/legal/dpa (it is part of the Terms; keep a signed copy).
-3. **Authentication → Sign In / Providers**
+1. Create an account (2FA on) and a project on the **Free** plan:
+   - **Region**: the data must stay in an **EU member state**. The general region *Europe* picks a
+     region for you and can also land in London or Zurich, which are outside the EU; after creating
+     the project, check the region on its home page. Ireland (`eu-west-1`), Frankfurt
+     (`eu-central-1`), Paris (`eu-west-3`) and Stockholm (`eu-north-1`) are all fine. If it is
+     not one of these, delete the project and create it again (or pick a specific region if the form
+     offers one). If the region is not Ireland, set `VITE_SUPABASE_REGION` in §2.
+   - **GitHub (optional)**: leave it empty. Migrations are applied by hand (`supabase db push`), so
+     nothing reaches the production database without you deciding it.
+   - **Security**: untick *Automatically expose new tables*; leave *Enable automatic RLS* off. (The
+     migrations set every grant and RLS policy themselves, and also cancel the automatic exposure,
+     so a project created with the defaults is safe too.)
+   - Keep the database password in your password manager.
+2. Note the **Project URL** and the **publishable key** (*Connect* button, or *Project settings →
+   API keys*): Cloudflare needs them in §2.
+3. Download the DPA: supabase.com/legal/dpa (it is part of the Terms; keep a signed copy).
+4. **Authentication → Sign In / Providers**
    - *Allow new users to sign up*: **off** (Sinapsi is invite-only).
-   - Email provider: **on** (needed for sign-in); *Confirm email*: on.
-4. **Authentication → Multi-Factor**: TOTP (app authenticator) enabled. It is free on every plan.
-5. **Authentication → Policies / Passwords**: minimum length 12, *lowercase, uppercase and digits*.
-6. **Authentication → URL Configuration**
+   - Email provider: **on** (it is the e-mail + password sign-in, not e-mail sending).
+5. **Authentication → Multi-Factor**: TOTP (app authenticator) enabled. It is free on every plan.
+6. **Authentication → Policies / Passwords**: minimum length 12, *lowercase, uppercase and digits*.
+7. **Authentication → URL Configuration** (with the address from §2):
    - Site URL: `https://<your-domain>`
    - Redirect URLs: `https://<your-domain>/auth/confirm`
-7. **Authentication → Email Templates**: paste `supabase/templates/invite.html` into *Invite user*
-   and `supabase/templates/recovery.html` into *Reset password* (they use `token_hash` links).
-8. **Authentication → Providers → Email → Email OTP Expiration**: `86400` (24 h), so links sent
-   by hand stay valid long enough.
-   **E-mail is optional.** By default you create accounts from *Amministrazione* and get a one-time
-   link to copy and send yourself, however you like; password-reset links work the same way. If you
-   prefer automatic e-mails, configure *Authentication → SMTP* (the built-in sender only reaches your
-   own team): **Brevo** is free (300 e-mails/day, EU company, DPA in its terms). E-mails contain only
-   the address and a one-time link.
-9. Apply the schema (tables, access rules, grants, nightly cleanup job) and deploy the invite function from your computer:
+8. **Authentication → Providers → Email → Email OTP Expiration**: `86400` (24 h), so the links you
+   send by hand stay valid long enough.
+9. Apply the schema (tables, access rules, grants, nightly cleanup job) and deploy the account
+   function from your computer:
 
    ```bash
    pnpm exec supabase login
@@ -63,9 +73,9 @@ pnpm dev
    pnpm exec supabase secrets set ALLOWED_ORIGINS=https://<your-domain> SITE_URL=https://<your-domain>
    ```
 
-10. **Database → Advisors**: run the Security Advisor; it should report no exposed tables.
-11. **Bootstrap the platform admin** (once): *Authentication → Users → Add user* (your e-mail,
-    with a password), then in the SQL editor:
+   Then open **Database → Advisors → Security Advisor**: it should report no exposed tables.
+10. **Bootstrap the platform admin** (once): *Authentication → Users → Add user* (your e-mail,
+    with a password, *Auto Confirm User* ticked), then in the SQL editor:
 
     ```sql
     insert into public.platform_admins (user_id)
@@ -73,27 +83,61 @@ pnpm dev
     ```
 
     Sign in to Sinapsi, enroll TOTP, open **Amministrazione → Nuovo studio**, create the practice
-    with *Link da inviare io*, and send her the one-time link yourself. She opens it,
-    chooses a password and enrolls TOTP. If she later forgets the password or loses her phone, use
-    the key / shield buttons next to her name (*Gestisci*) to create a new-password link or reset 2FA.
-12. She sets the **practice passphrase** for encrypted patient names in *Impostazioni → Studio*.
+    and copy the one-time link; send it to her yourself. She opens it, chooses a password and
+    enrolls TOTP. If she later forgets the password or loses her phone, use the key / shield
+    buttons next to her name (*Gestisci*) to create a new-password link or reset 2FA.
+11. She sets the **practice passphrase** for encrypted patient names in *Impostazioni → Studio*.
+
+### E-mail (optional, not needed)
+
+Sinapsi works without sending any e-mail: invitations and new-password links are copied by the
+admin and delivered personally, and the *Password dimenticata?* page tells users to ask the admin.
+Leave *Authentication → Emails* untouched; the built-in sender only reaches members of your
+Supabase team, and its templates cannot be edited without custom SMTP.
+
+To have Supabase send the e-mails instead:
+
+1. Configure custom SMTP in *Authentication → Emails → SMTP Settings*. Brevo is free (300 e-mails a
+   day, EU company, DPA in its terms) but needs a sender address you own. E-mails contain only the
+   address and a one-time link. Add the provider to `docs/gdpr/sub-responsabili.md`.
+2. Paste `supabase/templates/invite.html` into the *Invite user* template and
+   `supabase/templates/recovery.html` into *Reset password* (they use `token_hash` links).
+3. Add the build variable `VITE_EMAIL_ENABLED=true` in Cloudflare (§2) and redeploy. The invite
+   dialogs then also offer *Email automatica*, and the *Password dimenticata?* page sends a link.
 
 ## 2. Cloudflare (static hosting)
 
-1. Create an account (2FA on). **Workers & Pages → Create → Pages → Connect to Git**, pick the repo.
-   The project name becomes the free address `https://<name>.pages.dev`.
-2. Build settings: production branch `main`, framework *None*, build command `pnpm build-only`,
-   output directory `dist`. Under *Settings → Builds → Branch control*, turn off automatic preview
-   deployments for other branches: each one would be another public address that Supabase does not
-   allow.
-3. Environment variables (Production): `VITE_SUPABASE_URL=https://<ref>.supabase.co`,
-   `VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_…`, `NODE_VERSION=24`.
-4. The build emits `dist/_headers` (CSP restricted to your Supabase URL, HSTS, no referrer…).
-   Single-page routing works out of the box (no `404.html` → Pages serves `index.html`).
-5. Use `https://<name>.pages.dev` as `<your-domain>` in Supabase (step 1.6) and in `ALLOWED_ORIGINS` /
-   `SITE_URL`. A custom domain is optional (about €10/year); if you add one later, update those three
+Cloudflare serves only the built files; the browser talks directly to Supabase. The repository
+contains `wrangler.jsonc`, which deploys `dist/` as a Worker with static assets only (no server
+code) and single-page routing.
+
+1. Create an account (2FA on). **Workers & Pages → Create**, choose to import a Git repository and
+   pick `albertomercurio/Sinapsi`.
+2. In *Set up your application*:
+   - Project name: `sinapsi`. The site will be at `https://sinapsi.<your-subdomain>.workers.dev`.
+   - Build command: `pnpm build-only`. (`pnpm run build` also works; it adds a type check that CI
+     already does.)
+   - Deploy command: `npx wrangler deploy` (the default).
+   - **Enable Preview builds: off.** Each branch, including Dependabot's, would otherwise get its own
+     public address, which Supabase does not allow anyway.
+   - Protect with Cloudflare Access: off (Sinapsi has its own sign-in with 2FA).
+   - **Advanced settings → Build variables**:
+     - `VITE_SUPABASE_URL` = `https://<ref>.supabase.co`
+     - `VITE_SUPABASE_PUBLISHABLE_KEY` = `sb_publishable_…`
+     - `VITE_SUPABASE_REGION` only if the project is not in `eu-west-1`, e.g. `eu-central-1`.
+
+   Without the two Supabase variables the build stops with an error instead of publishing a broken
+   site. If you added them after the first attempt, use *Retry build*.
+3. After the first deploy, in the Worker's **Settings → Domains & Routes**, disable *Preview URLs*.
+   Keep the `workers.dev` route: it is the site's address.
+4. Use `https://sinapsi.<your-subdomain>.workers.dev` as `<your-domain>` in Supabase (§1.7 and the
+   secrets in §1.9). A custom domain is optional (about €10/year); if you add one later, update those
    places.
-6. Do **not** enable Web Analytics or other Cloudflare add-ons that inject scripts.
+5. Do **not** enable Web Analytics or other add-ons that inject scripts. Node.js 24, the default of the
+   build image, matches the project.
+6. Check the security headers once:
+   `curl -sI https://<your-domain>/patients | grep -i content-security-policy` must print the policy
+   with your Supabase URL in `connect-src`.
 
 > Vercel works too (Pro plan, because the Hobby plan is non-commercial and its DPA only covers Pro):
 > translate `_headers` into `vercel.json` headers and add an SPA rewrite to `/index.html`.
@@ -147,9 +191,9 @@ Never run backups in CI: health data must not pass through GitHub.
 
 ## Go-live checklist
 
-- [ ] Supabase project in **eu-central-1**, DPA downloaded; Cloudflare DPA accepted (Brevo too, if used).
-- [ ] 2FA on Supabase, Cloudflare, GitHub (and Brevo, if used) and on every Sinapsi account.
-- [ ] Sign-ups disabled, password policy set, TOTP enabled, templates and redirect URL configured.
+- [ ] Supabase project in an **EU region** (e.g. `eu-west-1` Ireland), DPA downloaded; Cloudflare DPA accepted (SMTP provider too, if used).
+- [ ] 2FA on Supabase, Cloudflare, GitHub (and the SMTP provider, if used) and on every Sinapsi account.
+- [ ] Sign-ups disabled, password policy set, TOTP enabled, redirect URL and link expiry (24 h) configured.
 - [ ] `supabase db push` done; Security Advisor clean; `admin-accounts` deployed with `ALLOWED_ORIGINS` and `SITE_URL`.
 - [ ] Production site served with the security headers (check with the browser dev tools).
 - [ ] Keep-alive workflow ran successfully once.

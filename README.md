@@ -36,7 +36,7 @@ grafici dell'andamento nel tempo. Interfaccia in italiano e inglese, pensata per
 ## Stack
 
 Vite 8 · Vue 3.5 · TypeScript · Vue Router · Pinia · TanStack Query · vue-i18n 11 · Tailwind CSS 4 ·
-Reka UI · ECharts 6 · Supabase (Postgres + Auth + Edge Functions, regione Francoforte) · Vitest ·
+Reka UI · ECharts 6 · Supabase (Postgres + Auth + Edge Functions, regione UE, Irlanda) · Vitest ·
 Playwright · pgTAP. Hosting statico su Cloudflare.
 
 ## Avvio in locale
@@ -92,7 +92,7 @@ dimostrativi è `demo sinapsi studio`.
 
 - [Architettura](docs/architecture.md) · [Metodi di misura e scoring](docs/scoring-methods.md)
 - [Aggiungere un'attività](docs/adding-an-activity.md) · [Aggiungere una lingua](docs/adding-a-language.md)
-- [Messa in produzione](docs/deployment.md) (Supabase Francoforte, Cloudflare, GitHub, checklist)
+- [Messa in produzione](docs/deployment.md) (Supabase UE, Cloudflare, GitHub, checklist)
 - [Manutenzione](docs/maintenance.md) (aggiornamenti, account, backup, incidenti)
 - [GDPR: modelli e checklist](docs/gdpr/README.md)
 

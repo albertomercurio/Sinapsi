@@ -1,6 +1,6 @@
 # Sinapsi — notes for coding agents
 
-Cognitive-rehabilitation SPA (Vue 3 + Vite + TS) on Supabase (eu-central-1). Health data under
+Cognitive-rehabilitation SPA (Vue 3 + Vite + TS) on Supabase (EU region, eu-west-1 Ireland). Health data under
 GDPR: read `docs/architecture.md` (security model) before touching data access.
 
 ## Commands

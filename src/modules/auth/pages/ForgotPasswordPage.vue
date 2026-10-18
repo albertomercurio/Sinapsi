@@ -5,7 +5,7 @@ import { Mail } from '@lucide/vue'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
-import { supabase } from '@/shared/api/supabase'
+import { EMAIL_ENABLED, supabase } from '@/shared/api/supabase'
 import { errorKey } from '@/shared/api/errors'
 import AuthCard from '../components/AuthCard.vue'
 
@@ -33,8 +33,12 @@ async function submit() {
 </script>
 
 <template>
-  <AuthCard :title="t('auth.forgotTitle')" :description="t('auth.forgotSubtitle')">
-    <p v-if="sent" class="text-sm" role="status">{{ t('auth.forgotSent') }}</p>
+  <AuthCard
+    :title="t('auth.forgotTitle')"
+    :description="EMAIL_ENABLED ? t('auth.forgotSubtitle') : undefined"
+  >
+    <p v-if="!EMAIL_ENABLED" class="text-sm leading-relaxed">{{ t('auth.forgotNoEmail') }}</p>
+    <p v-else-if="sent" class="text-sm" role="status">{{ t('auth.forgotSent') }}</p>
     <form v-else class="grid gap-4" @submit.prevent="submit">
       <div class="grid gap-2">
         <Label for="email">{{ t('auth.email') }}</Label>
@@ -46,7 +50,7 @@ async function submit() {
         {{ t('auth.sendLink') }}
       </Button>
     </form>
-    <p class="text-muted-foreground mt-6 text-xs leading-relaxed">
+    <p v-if="EMAIL_ENABLED" class="text-muted-foreground mt-6 text-xs leading-relaxed">
       {{ t('auth.forgotAlternative') }}
     </p>
     <RouterLink

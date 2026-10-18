@@ -1,7 +1,7 @@
 import { computed, toValue, type MaybeRefOrGetter } from 'vue'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-import { FunctionRegion, FunctionsHttpError } from '@supabase/supabase-js'
-import { supabase } from '@/shared/api/supabase'
+import { FunctionsHttpError } from '@supabase/supabase-js'
+import { SUPABASE_REGION, supabase } from '@/shared/api/supabase'
 import { unwrap } from '@/shared/api/errors'
 
 export interface InviteInput {
@@ -22,11 +22,11 @@ export interface AccountResult {
   removed?: number
 }
 
-/** Calls the admin-accounts Edge Function, pinned to Frankfurt. */
+/** Calls the admin-accounts Edge Function, pinned to the project's (EU) region. */
 async function callAccounts(body: Record<string, unknown>): Promise<AccountResult> {
   const { data, error } = await supabase.functions.invoke('admin-accounts', {
     body,
-    region: FunctionRegion.EuCentral1,
+    region: SUPABASE_REGION,
   })
   if (error) {
     let code = 'invite_failed'

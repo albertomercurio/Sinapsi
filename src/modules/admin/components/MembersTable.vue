@@ -21,6 +21,7 @@ import {
   useSetRole,
 } from '../api'
 import DeliveryChoice from './DeliveryChoice.vue'
+import { EMAIL_ENABLED } from '@/shared/api/supabase'
 import LinkDialog from './LinkDialog.vue'
 
 const props = defineProps<{ orgId: string; allowOwnerInvite?: boolean }>()
@@ -229,7 +230,7 @@ async function confirmRemove() {
         class="w-36"
         :aria-label="t('admin.role')"
       />
-      <DeliveryChoice v-model="delivery" />
+      <DeliveryChoice v-if="EMAIL_ENABLED" v-model="delivery" />
       <Button type="submit" :disabled="inviteM.isPending.value" data-testid="invite-submit"
         ><UserPlus /> {{ t('admin.invite') }}</Button
       >

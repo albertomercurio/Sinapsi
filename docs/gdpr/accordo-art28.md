@@ -64,7 +64,7 @@ d. esegue periodicamente i backup cifrati messi a disposizione dalla piattaforma
 
 ## 5–8. Trasferimenti, sub-responsabili, diritti, sicurezza
 
-I dati sono ospitati nell'Unione Europea (Francoforte). Eventuali accessi da paesi terzi da parte
+I dati sono ospitati nell'Unione Europea (Irlanda). Eventuali accessi da paesi terzi da parte
 dei sub-responsabili sono disciplinati dalle Clausole Contrattuali Tipo della Commissione
 (Decisione 2021/914) e/o dall'EU-US Data Privacy Framework, come indicato nell'Allegato B.
 

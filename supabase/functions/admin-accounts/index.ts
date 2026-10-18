@@ -15,7 +15,7 @@
 // therapists of their own practice. Every action is written to the audit log of
 // each practice the target belongs to, so owners see what admins did.
 //
-// Invoke with `region: 'eu-central-1'` so the function runs in Frankfurt.
+// The app invokes it pinned to the project's region (VITE_SUPABASE_REGION), so it runs in the EU.
 import { createClient, type SupabaseClient } from 'npm:@supabase/supabase-js@2'
 
 type Role = 'owner' | 'therapist'

@@ -23,7 +23,7 @@ sotto la responsabilità di un professionista tenuto al segreto professionale.
 [Se il DPO lo ritiene necessario: consenso esplicito, sezione finale.]
 
 **Chi vede i dati.** Solo i professionisti dello studio che la seguono. Il fornitore tecnico della
-piattaforma e i suoi fornitori (hosting nell'Unione Europea, a Francoforte) trattano i dati per
+piattaforma e i suoi fornitori (hosting nell'Unione Europea, in Irlanda) trattano i dati per
 nostro conto, con accordi che li vincolano alla riservatezza e alla sicurezza. I dati non vengono
 venduti né usati per pubblicità o profilazione.
 
