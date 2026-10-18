@@ -43,8 +43,12 @@ pnpm dev
      (`eu-central-1`), Paris (`eu-west-3`) and Stockholm (`eu-north-1`) are all fine. If it is
      not one of these, delete the project and create it again (or pick a specific region if the form
      offers one). If the region is not Ireland, set `VITE_SUPABASE_REGION` in §2.
-   - **GitHub (optional)**: leave it empty. Migrations are applied by hand (`supabase db push`), so
-     nothing reaches the production database without you deciding it.
+   - **GitHub**: connect `albertomercurio/Sinapsi`. Then in *Project settings → Integrations →
+     GitHub*: production branch `main`, *Deploy to production* **on**, *Automatic branching* **off**
+     (it would create a database per branch, Dependabot's included). Every push to `main` then
+     applies new migrations and deploys the `admin-accounts` function, at the same time as
+     Cloudflare publishes the site. Auth settings and `seed.sql` are never sent to production
+     (`config.toml` has no `[remotes]` block; keep it that way).
    - **Security**: untick *Automatically expose new tables*; leave *Enable automatic RLS* off. (The
      migrations set every grant and RLS policy themselves, and also cancel the automatic exposure,
      so a project created with the defaults is safe too.)
@@ -62,18 +66,20 @@ pnpm dev
    - Redirect URLs: `https://<your-domain>/auth/confirm`
 8. **Authentication → Providers → Email → Email OTP Expiration**: `86400` (24 h), so the links you
    send by hand stay valid long enough.
-9. Apply the schema (tables, access rules, grants, nightly cleanup job) and deploy the account
-   function from your computer:
+9. Schema and account function: the GitHub integration applies them on the next push to `main`.
+   Check *Database → Migrations* (all files of `supabase/migrations/` listed) and *Edge Functions*
+   (`admin-accounts` deployed). Without the integration, from your computer:
 
    ```bash
    pnpm exec supabase login
    pnpm exec supabase link --project-ref <project-ref>
    pnpm exec supabase db push
    pnpm exec supabase functions deploy admin-accounts
-   pnpm exec supabase secrets set ALLOWED_ORIGINS=https://<your-domain> SITE_URL=https://<your-domain>
    ```
 
-   Then open **Database → Advisors → Security Advisor**: it should report no exposed tables.
+   Then **Edge Functions → Secrets**: add `ALLOWED_ORIGINS` and `SITE_URL`, both
+   `https://<your-domain>`. Finally open **Database → Advisors → Security Advisor**: it should
+   report no exposed tables.
 10. **Bootstrap the platform admin** (once): *Authentication → Users → Add user* (your e-mail,
     with a password, *Auto Confirm User* ticked), then in the SQL editor:
 

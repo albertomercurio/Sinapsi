@@ -26,22 +26,15 @@ backed up. Most of it is automatic; the manual part is about 15 minutes a month.
    - `pnpm test:db`
    - `pnpm test:e2e` (resets the local database; set `E2E_PORT=4174` if port 4173 is busy)
 4. Push the branch and open a pull request. CI runs the same checks; wait for green.
-5. **If the pull request adds a file in `supabase/migrations/`**, apply it to production *before*
-   merging:
-
-   ```bash
-   pnpm exec supabase db push
-   ```
-
-   It lists the pending migrations and asks for confirmation. Write migrations so the version
-   currently online keeps working: add tables and columns first, and remove old ones only in a later
-   release. Take a backup first (`scripts/backup-schedule.sh run-now`).
-6. **If `supabase/functions/admin-accounts/` changed**:
-
-   ```bash
-   pnpm exec supabase functions deploy admin-accounts
-   ```
-
+5. **If the pull request adds a file in `supabase/migrations/`**: take a backup first
+   (`scripts/backup-schedule.sh run-now`). On merge, the Supabase GitHub integration applies it to
+   production while Cloudflare publishes the new site, so write migrations that the version
+   currently online can live with for a minute: add tables and columns first, and remove old ones
+   only in a later release. After merging, check the deployment status in *Supabase → Project
+   settings → Integrations* (or the check on the commit in GitHub).
+6. Changes to `supabase/functions/admin-accounts/` are deployed by the integration too. Without the
+   integration, run `pnpm exec supabase db push` and `pnpm exec supabase functions deploy
+   admin-accounts` yourself.
 7. Merge the pull request. Cloudflare publishes `main` in about a minute. Open tabs pick up the new
    version on the next page change (the app reloads itself once if a page of the old version is
    gone).
