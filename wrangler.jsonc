@@ -4,6 +4,10 @@
 {
   "name": "sinapsi",
   "compatibility_date": "2026-09-01",
+  // The site's address: https://sinapsi.<account-subdomain>.workers.dev
+  "workers_dev": true,
+  // No extra per-version addresses (they would be public copies of the site).
+  "preview_urls": false,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"

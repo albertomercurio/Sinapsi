@@ -134,8 +134,12 @@ code) and single-page routing.
 
    Without the two Supabase variables the build stops with an error instead of publishing a broken
    site. If you added them after the first attempt, use *Retry build*.
-3. After the first deploy, in the Worker's **Settings → Domains & Routes**, disable *Preview URLs*.
-   Keep the `workers.dev` route: it is the site's address.
+3. The address is shown in the Worker's **Domains** tab. `wrangler.jsonc` keeps it on
+   (`workers_dev`) and keeps per-version preview addresses off (`preview_urls`): each deploy
+   applies these, so the toggles there need no changes. The middle part of the address is the
+   account's subdomain (by default derived from your account name). To change it, go to
+   **Workers & Pages** and choose *Change* next to *Your subdomain* (it must be unique across
+   Cloudflare); do it before configuring Supabase, or update the places in step 4 afterwards.
 4. Use `https://sinapsi.<your-subdomain>.workers.dev` as `<your-domain>` in Supabase (§1.7 and the
    secrets in §1.9). A custom domain is optional (about €10/year); if you add one later, update those
    places.
